@@ -1,8 +1,10 @@
-package com.paszlelab.dcroarapp;
+package com.paszlelab.dcroarapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.paszlelab.dcroarapp.R;
 
 public class AuthenticationPage2 extends AppCompatActivity {
 

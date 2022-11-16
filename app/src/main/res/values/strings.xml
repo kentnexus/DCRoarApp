@@ -3,4 +3,9 @@
     <string name="apptitle">DC Roar</string>
     <string name="welcome">Connect better with other students in the campus.</string>
     <string name="login">Let\'s get you started.</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Non-binary</item>
+    </string-array>
 </resources>
