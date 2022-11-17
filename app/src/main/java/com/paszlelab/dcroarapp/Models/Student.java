@@ -6,7 +6,7 @@ public class Student {
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private Date birthday;
+    private String birthday;
     private String gender;
     private String phoneNumber;
 
@@ -30,15 +30,11 @@ public class Student {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -56,5 +52,9 @@ public class Student {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Student(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

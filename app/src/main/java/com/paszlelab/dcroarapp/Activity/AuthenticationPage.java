@@ -6,27 +6,27 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.paszlelab.dcroarapp.Fragments.DatePickerFragment;
+import com.paszlelab.dcroarapp.Models.Student;
 import com.paszlelab.dcroarapp.R;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class AuthenticationPage extends AppCompatActivity implements  DatePickerDialog.OnDateSetListener{
@@ -35,17 +35,30 @@ public class AuthenticationPage extends AppCompatActivity implements  DatePicker
     private EditText etLName;
     private EditText etEmail;
     private EditText etPW;
-    private Date bday;
-    private Spinner sGender;
+    private Spinner spinGender;
     private EditText etPhone;
     private Button btnRegister, btnPickDate;
-    private FirebaseAuth firebaseAuth;
+    private boolean addedInfo;
+    private ProgressBar progressBar;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+    Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
+        etFName = findViewById(R.id.editFName);
+        etLName = findViewById(R.id.editLName);
+        etEmail = findViewById(R.id.editEmailAddress);
+        etPW = findViewById(R.id.editPassword);
+//        try {
+//            bday = new SimpleDateFormat("dd/MM/yyyy").parse(btnPickDate.getText().toString());
+//        } catch (ParseException e) {
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
         btnPickDate = findViewById(R.id.btnDatePicker);
         btnPickDate.setText(getTodaysDate());
 
@@ -57,73 +70,105 @@ public class AuthenticationPage extends AppCompatActivity implements  DatePicker
                 datePicker.show(getSupportFragmentManager(),"");
             }
         });
-
-        etFName = findViewById(R.id.editFName);
-        etLName = findViewById(R.id.editLName);
-        etEmail = findViewById(R.id.editEmailAddress);
-        etPW = findViewById(R.id.editPassword);
-        try {
-            bday = new SimpleDateFormat("dd/MM/yyyy").parse(btnPickDate.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        sGender = findViewById(R.id.spinGender);
+        spinGender = findViewById(R.id.spinGender);
         etPhone = findViewById(R.id.editTextPhone);
         btnRegister = findViewById(R.id.btnRegister);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = firebaseFirestore.getInstance();
+
+        addedInfo = false;
 
         btnRegister.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                if(validEmail(AuthenticationPage.this)==true && !TextUtils.isEmpty(etPW.getText())){
-                    requiredFields(etFName, etLName, bday, sGender, etPhone);
-                    firebaseAuth.createUserWithEmailAndPassword(etEmail.getText().toString(),
-                            etPW.getText().toString())
+                boolean notEmptyFName = requiredField(etFName,"First Name");
+                boolean notEmptyLName = requiredField(etLName, "Last Name");
+                boolean notEmptyEmail = requiredField(etEmail, "Email Address");
+                boolean notEmptyPW = requiredField(etPW, "Password");
+
+                if( notEmptyFName == true && notEmptyLName == true &&
+                        notEmptyEmail == true && notEmptyPW == true) {
+                    if(validEmail(AuthenticationPage.this)==true){
+                        progressBar.setVisibility(View.VISIBLE);
+                        firebaseAuth.createUserWithEmailAndPassword(etEmail.getText().toString(),
+                                    etPW.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
+                                    progressBar.setVisibility(View.GONE);
+//                                    for writing to firestore db
+                                    String sFname = etFName.getText().toString();
+                                    String sLname = etLName.getText().toString();
+                                    String sEmail = etEmail.getText().toString();
+                                    String sBday = btnPickDate.getText().toString();
+                                    String sGender = spinGender.getSelectedItem().toString();
+                                    String sPhone = etPhone.getText().toString();
+
+                                    addDataToFirestore(sFname, sLname, sEmail, sBday, sGender, sPhone);
+//                                    Log.d("-", addedInfo+"");
+
+//                                    if authentication is successful
+                                    if (task.isSuccessful()) {
                                         firebaseAuth.getCurrentUser().sendEmailVerification()
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
+
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        if(task.isSuccessful()){
+                                                        if (task.isSuccessful()) {
                                                             Toast.makeText(AuthenticationPage.this, "Registered successfully. Please check your email's spam/junk folder for the verification link.", Toast.LENGTH_LONG).show();
                                                             etEmail.setText("");
                                                             etPW.setText("");
-
-                                                            Handler handler = new Handler();
-                                                            handler.postDelayed(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    AuthenticationPage.this.finish();
-                                                                }
-                                                            }, 5000);
-                                                        }else {
+                                                            AuthenticationPage.this.finish();
+                                                        } else {
                                                             Toast.makeText(AuthenticationPage.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                         }
                                                     }
                                                 });
-                                    } else{
+                                    } else {
                                         Toast.makeText(AuthenticationPage.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
-
                                 }
                             });
-                }
-                else{
-                    if(TextUtils.isEmpty(etPW.getText())){
-                        etPW.setError( "Password is required!" );}
-                    else {
+                } else{
                         Toast.makeText(AuthenticationPage.this, "Please register with Douglas College student email address", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
-
     }
 
+//    writing to Firestore Database
+    private void addDataToFirestore(String sFname, String sLname, String sEmail, String sBday, String sGender, String sPhone) {
+
+        student = new Student(sEmail);
+
+        student.setFirstName(sFname);
+        student.setLastName(sLname);
+        student.setBirthday(sBday);
+        student.setGender(sGender);
+        student.setPhoneNumber(sPhone);
+
+        CollectionReference collectionReference = firebaseFirestore.collection("Student");
+
+        collectionReference.add(student).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+//                Log.d("-", "Data has been added to firestore.");
+                addedInfo = true;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("-", e.getMessage());
+            }
+        });
+    }
+
+//getting the date from datepicker
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day){
         Calendar c = Calendar.getInstance();
@@ -137,6 +182,7 @@ public class AuthenticationPage extends AppCompatActivity implements  DatePicker
         btnPickDate.setText(currentDateString);
     }
 
+//    getting today's today as default value
     public String getTodaysDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -146,6 +192,7 @@ public class AuthenticationPage extends AppCompatActivity implements  DatePicker
         return currentDateString;
     }
 
+//    only DC students can register
     public boolean validEmail(Context context){
 
         etEmail = findViewById(R.id.editEmailAddress);
@@ -157,22 +204,17 @@ public class AuthenticationPage extends AppCompatActivity implements  DatePicker
         return match;
     }
 
-    public void requiredFields(EditText fname, EditText lname, Date bday, Spinner gender, EditText phone){
-        if(TextUtils.isEmpty(fname.getText())){
-//            Toast.makeText(AuthenticationPage.this, "First Name is required.", Toast.LENGTH_LONG).show();
-            fname.setError( "First name is required!" );
-        } else if(TextUtils.isEmpty(lname.getText())){
-            lname.setError( "Last name is required!" );
-//        } else if(TextUtils.isEmpty(Date.getText())){
-//
-//        } else if(TextUtils.isEmpty(Spinner.getText())){
-
-        } else if(TextUtils.isEmpty(phone.getText())){
-            phone.setError( "Phone Number is required!" );
+//    required fields must be non-null
+    public boolean requiredField(EditText field, String sfield){
+        boolean notEmpty = false;
+        if(TextUtils.isEmpty(field.getText()))
+        {
+            field.setError( sfield+" is required!" );
         }
-        else{
-            Intent i = new Intent(getApplicationContext(), AuthenticationPage.class);
-            startActivity(i);
+        else {
+            notEmpty = true;
         }
+        return notEmpty;
     }
+
 }

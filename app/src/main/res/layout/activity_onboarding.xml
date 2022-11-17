@@ -48,14 +48,14 @@
         android:gravity="center"
         android:text="@string/welcome"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/btnSignIn"
         android:layout_width="321dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

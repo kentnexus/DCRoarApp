@@ -17,7 +17,10 @@ public class InitialPage extends AppCompatActivity {
     }
 
     public void goToSignUp(View v){
-        Intent intent = new Intent(this,AuthenticationPage.class);
-        startActivity(intent);
+        startActivity(new Intent(this,AuthenticationPage.class));
+    }
+
+    public void goToLogin(View v){
+        startActivity(new Intent(this, LoginPage.class));
     }
 }
