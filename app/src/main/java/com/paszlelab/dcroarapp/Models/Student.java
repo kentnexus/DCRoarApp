@@ -1,6 +1,5 @@
 package com.paszlelab.dcroarapp.Models;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class Student {
@@ -10,10 +9,6 @@ public class Student {
     private String birthday;
     private String gender;
     private String phoneNumber;
-
-    public Student() {
-
-    }
 
     public String getFirstName() {
         return firstName;
