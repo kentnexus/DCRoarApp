@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ChatPage">
+
+    <LinearLayout
+        android:id="@+id/navtop"
+        android:layout_width="412dp"
+        android:layout_height="48dp"
+        android:background="#C7E065"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/profilePicbtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="302dp"
+            android:layout_height="37dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Chats"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnNext"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:gravity="right|center_vertical"
+            android:text="+"
+            android:textSize="24sp"
+            android:paddingRight="20dp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rviewChats"
+        android:layout_width="415dp"
+        android:layout_height="586dp"
+        app:layout_constraintBottom_toTopOf="@+id/navbottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navtop" />
+
+    <LinearLayout
+        android:id="@+id/navbottom"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:background="#83FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/labelbottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rviewChats">
+
+
+        <ImageButton
+            android:id="@+id/chatbtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/chats" />
+
+        <ImageButton
+            android:id="@+id/coursebtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/courses" />
+
+        <ImageButton
+            android:id="@+id/friendsbtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/friends" />
+
+        <ImageButton
+            android:id="@+id/profilebtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/profile" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/labelbottom"
+        android:layout_width="412dp"
+        android:layout_height="20dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navbottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/chatsLabel"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Chats" />
+
+        <TextView
+            android:id="@+id/courseLabel"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Courses" />
+
+        <TextView
+            android:id="@+id/friendsLabel"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Friends" />
+
+        <TextView
+            android:id="@+id/profileLabel"
+            android:layout_width="101dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Friends" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

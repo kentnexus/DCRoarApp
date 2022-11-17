@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MessagePage">
+
+
+<LinearLayout
+    android:id="@+id/navtop"
+    android:layout_width="412dp"
+    android:layout_height="48dp"
+    android:background="#C7E065"
+    android:orientation="horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+    <Button
+        android:id="@+id/btnCancel"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="left|center_vertical"
+        android:text="<"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="290dp"
+        android:layout_height="37dp"
+        android:ems="10"
+        android:gravity="center|center_vertical"
+        android:hint="&#x1F50D; Search"
+        android:inputType="textAutoCorrect"
+        android:background="@drawable/edittext_search"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnNext"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:gravity="right|center_vertical"
+        android:text="+"
+        android:textSize="24sp"
+        android:paddingRight="20dp"
+        android:textColor="@color/black" />
+
+</LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rviewMessage"
+        android:layout_width="413dp"
+        android:layout_height="616dp"
+        android:background="#F1EEEE"
+        app:layout_constraintBottom_toTopOf="@+id/navbottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navtop"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/navbottom"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:background="#83FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rviewMessage">
+
+        <ImageButton
+            android:id="@+id/btnAdd"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="65dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/plus" />
+
+
+        <EditText
+            android:id="@+id/etWrite"
+            android:layout_width="269dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_msg"
+            android:ems="10"
+            android:gravity="left|center_vertical"
+            android:hint="Write message"
+            android:inputType="text"
+            android:paddingLeft="10sp"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#C6DF65"
+            android:gravity="left|center_vertical"
+            android:text="Send"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
