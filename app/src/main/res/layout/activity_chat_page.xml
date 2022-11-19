@@ -23,7 +23,7 @@
             android:layout_width="55dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/profilevec"
+            app:srcCompat="@drawable/profile"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/chatsvec"
+            app:srcCompat="@drawable/chats"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -83,7 +83,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/coursesve"
+            app:srcCompat="@drawable/courses"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -95,7 +95,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/friendsvec"
+            app:srcCompat="@drawable/friends"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -107,7 +107,7 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/profilevec"
+            app:srcCompat="@drawable/profile"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>

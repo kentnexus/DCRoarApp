@@ -13,11 +13,12 @@ public class InitialPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_initial);
     }
 
-    public void goToSignUp(View v){
-        startActivity(new Intent(this,AuthenticationPage.class));
+    public void goToTermsPage(View v){
+        startActivity(new Intent(this, TermsPage.class));
     }
 
     public void goToLogin(View v){
