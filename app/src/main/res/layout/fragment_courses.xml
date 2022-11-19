@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.CoursesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/navtop"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="#C7E065"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/profilePicbtn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/roarlogo"
+                android:scaleType="centerCrop"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Courses"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnPlus"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#00FFFFFF"
+                android:enabled="false"
+                android:gravity="right|center_vertical"
+                android:paddingRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

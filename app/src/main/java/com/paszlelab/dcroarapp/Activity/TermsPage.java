@@ -8,20 +8,21 @@ import android.view.View;
 
 import com.paszlelab.dcroarapp.R;
 
-public class InitialPage extends AppCompatActivity {
+public class TermsPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_initial);
+        setContentView(R.layout.activity_terms_page);
     }
 
-    public void goToTermsPage(View v){
-        startActivity(new Intent(this, TermsPage.class));
+    public void goBack(View v){
+        TermsPage.this.finish();
     }
 
-    public void goToLogin(View v){
-        startActivity(new Intent(this, LoginPage.class));
+    public void goToRegistration(View v){
+
+        startActivityForResult(new Intent(this, RegistrationPage.class),1);
     }
 }
