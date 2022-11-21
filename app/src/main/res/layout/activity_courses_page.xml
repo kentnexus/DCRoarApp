@@ -100,7 +100,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/chats" />
+            app:srcCompat="@drawable/chatsvec" />
 
         <ImageButton
             android:id="@+id/coursebtn"
@@ -111,7 +111,7 @@
             app:layout_constraintEnd_toStartOf="@+id/friendsbtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/chatbtn"
-            app:srcCompat="@drawable/courses"
+            app:srcCompat="@drawable/coursesve"
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
@@ -134,7 +134,7 @@
             app:layout_constraintEnd_toStartOf="@+id/profilebtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/coursebtn"
-            app:srcCompat="@drawable/friends"
+            app:srcCompat="@drawable/friendsvec"
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
@@ -157,7 +157,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/friendsbtn"
-            app:srcCompat="@drawable/profile"
+            app:srcCompat="@drawable/profilevec"
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView

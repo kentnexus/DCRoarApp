@@ -214,4 +214,8 @@ public class RegistrationPage extends AppCompatActivity implements  DatePickerDi
     }
 
 
+    public void goToLogin(View v){
+        startActivity(new Intent(this, LoginPage.class));
+    }
+
 }

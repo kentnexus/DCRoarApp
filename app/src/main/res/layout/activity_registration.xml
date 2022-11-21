@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="goToLogin"
     android:orientation="vertical"
     tools:context=".Activity.RegistrationPage">
 
@@ -138,10 +139,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_border"
+            android:ems="10"
             android:hint="Birthday"
             android:onClick="openDatePicker"
             android:paddingLeft="10dp"
-            android:ems="10"
             android:textAlignment="textStart"
             android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
             android:textColor="@color/black"
@@ -226,16 +227,33 @@
 
     <TextView
         android:id="@+id/loginagree"
-        android:layout_width="250dp"
+        android:layout_width="139dp"
         android:layout_height="31dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:lines="2"
         android:text="@string/signintext"
         android:textColorLink="#2196F3"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintEnd_toStartOf="@+id/loginagree2"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/loginagree2"
+        android:layout_width="67dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="116dp"
+        android:gravity="center"
+        android:lines="2"
+        android:text="@string/signintext2"
+        android:textColor="#5F74DD"
+        android:textColorLink="#2196F3"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/loginagree"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ProgressBar
