@@ -43,8 +43,8 @@ app:layout_constraintTop_toTopOf="parent">
 
     <WebView
         android:id="@+id/webview"
-        android:layout_width="380dp"
-        android:layout_height="520dp"
+        android:layout_width="383dp"
+        android:layout_height="498dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/loginagree"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +56,7 @@ app:layout_constraintTop_toTopOf="parent">
         android:id="@+id/loginagree"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:lines="2"
         android:text="@string/loginpolicy"
@@ -63,13 +64,15 @@ app:layout_constraintTop_toTopOf="parent">
         app:layout_constraintBottom_toTopOf="@+id/signupBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/webview" />
 
     <Button
         android:id="@+id/signupBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="45dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="45dp"
         android:layout_marginBottom="72dp"
         android:backgroundTint="#C8E165"
@@ -80,6 +83,7 @@ app:layout_constraintTop_toTopOf="parent">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginagree" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
