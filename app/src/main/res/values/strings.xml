@@ -9,7 +9,8 @@
         <item>Non-binary</item>
     </string-array>
     <string name="loginpolicy">By proceeding, you also agree to the Terms of Service and Privacy Policy</string>
-    <string name="signintext">Already have an account? Sign in</string>
+    <string name="signintext">Already have an account?</string>
+    <string name="signintext2"><b><u>Sign in</u></b></string>
     <string name="checkemail">Please check you email (%1$s) for a link to create or sign in to your account.
                             Check junk or spam folders if not in inbox.</string>
     <!-- Strings related to login -->
