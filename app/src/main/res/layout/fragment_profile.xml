@@ -64,34 +64,56 @@
             android:background="#C7E065"
             android:orientation="vertical"
             android:paddingBottom="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navtop">
+
+            <!--                app:layout_constraintTop_toBottomOf="@+id/imgIconPic"--><![CDATA[
+                tools:ignore="MissingClass,MissingConstraints" />
+
+            ]]>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgProfilePic"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="152dp"
+                android:layout_marginEnd="163dp"
+                android:contentDescription="Profile Picture"
                 android:src="@drawable/ic_launcher_background"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgIconPic"
-                tools:ignore="MissingClass,MissingConstraints" />
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/txtChangePic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/addProfilePic"
+                android:layout_width="65dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/addProfilePic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:text="Update Profile Picture"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="-25dp"
+                android:layout_marginEnd="-20dp"
+                android:src="@drawable/ic_add" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/txtChangePic"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_marginLeft="5dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginBottom="5dp"-->
+            <!--                android:text="Update Profile Picture"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="12sp" />-->
 
         </LinearLayout>
 
@@ -125,50 +147,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <TextView
-                android:id="@+id/txtUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:ems="9"
-                android:gravity="center_vertical"
-                android:text="Username"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <TextView-->
+<!--                android:id="@+id/txtUserName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:ems="9"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="Username"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textSize="18dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-            <EditText
-                android:id="@+id/edUserName"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:background="@drawable/edittext_border"
-                android:ems="10"
-                android:hint="John Doe"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <EditText-->
+<!--                android:id="@+id/edUserName"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:background="@drawable/edittext_border"-->
+<!--                android:ems="10"-->
+<!--                android:hint="John Doe"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <TextView
                 android:id="@+id/txtFName"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:ems="9"
                 android:gravity="center_vertical"
                 android:text="First Name"
                 android:textColor="#000000"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/edFName"
                 android:layout_width="200dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/edittext_border"
                 android:ems="10"
                 android:hint="John"
@@ -176,7 +197,7 @@
                 android:paddingLeft="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtFName"
-                app:layout_constraintTop_toBottomOf="@+id/edUserName" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtLName"
@@ -230,6 +251,7 @@
                 android:hint="john.doe@gmail.com"
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txtFName"
                 app:layout_constraintTop_toBottomOf="@+id/edLName" />
@@ -267,21 +289,21 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:text="ACCOUNT"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginLeft="5dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginBottom="5dp"-->
+            <!--                android:text="ACCOUNT"-->
+            <!--                android:textColor="@color/black"-->
+            <!--                android:textSize="20sp"-->
+            <!--                android:textStyle="bold" />-->
 
         </LinearLayout>
 
@@ -294,43 +316,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
+<!--        <TextView-->
+<!--            android:id="@+id/txtPassword"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:ems="9"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:text=" Password"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textSize="18dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/edPassword"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:background="@drawable/edittext_border"-->
+<!--            android:ems="10"-->
+<!--            android:hint="*********"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/txtPassword"-->
+<!--            android:drawableRight="@drawable/ic_baseline_visibility_off_24"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:paddingRight="10dp"-->
+<!--            android:longClickable="false"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
         <TextView
-            android:id="@+id/txtPassword"
+            android:id="@+id/txtUpdateData"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginStart="10dp"
+            android:background="@drawable/edittext_border"
+            android:clickable="true"
             android:ems="9"
-            android:gravity="center_vertical"
-            android:text="Change Password"
+            android:gravity="center"
+            android:onClick="update"
+            android:text="Save Update"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/edPassword"
-            android:layout_width="200dp"
+        <TextView
+            android:id="@+id/txtResetPassword"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edittext_border"
-            android:ems="10"
-            android:hint="*********"
-            android:inputType="textPersonName"
-            android:paddingLeft="10dp"
+            android:clickable="true"
+            android:ems="9"
+            android:gravity="center"
+            android:text="Reset Password"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtUpdateData" />
 
         <TextView
             android:id="@+id/txtSignOut"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_border"
             android:ems="9"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="Sign Out"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/txtResetPassword" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
