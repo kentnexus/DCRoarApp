@@ -31,13 +31,13 @@
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <androidx.appcompat.widget.SearchView
-                    android:id="@+id/contactSearchView"
+                    android:id="@+id/userSearchView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
                     app:iconifiedByDefault="false"
-                    app:queryHint="Search Friend" />
+                    app:queryHint="Search User" />
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
@@ -51,12 +51,30 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewContact"
+            android:id="@+id/recyclerViewUsers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/card"
+            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/friend_item_layout" />
+
+        <ProgressBar
+            android:id="@+id/progressBarUsers"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/txtErrorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:textAlignment="center"/>
 
     </RelativeLayout>
 </layout>

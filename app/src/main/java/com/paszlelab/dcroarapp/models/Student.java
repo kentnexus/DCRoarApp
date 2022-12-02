@@ -1,6 +1,9 @@
 package com.paszlelab.dcroarapp.models;
 
-public class Student {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class Student implements Serializable {
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -26,6 +29,10 @@ public class Student {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getBirthday() {
@@ -55,4 +62,17 @@ public class Student {
     public Student(String emailAddress) {
         this.emailAddress = emailAddress;
     }
+
+    public Student() {
+    }
+
+    public static Comparator<Student> firstNameComparator = new Comparator<Student>() {
+
+        public int compare(Student s1, Student s2) {
+            String StudentName1 = s1.firstName.toUpperCase();
+            String StudentName2 = s2.firstName.toUpperCase();
+
+            //ascending order
+            return StudentName1.compareTo(StudentName2);
+        }};
 }

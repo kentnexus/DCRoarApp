@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements Filterable {
+public class ContactAdapter_old extends RecyclerView.Adapter<ContactAdapter_old.ViewHolder> implements Filterable {
 
     private Context context;
     private ArrayList<Student> arrayList, filterArrayList;
 
 
-    public ContactAdapter(Context context, ArrayList<Student> arrayList) {
+    public ContactAdapter_old(Context context, ArrayList<Student> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         filterArrayList = new ArrayList<>();

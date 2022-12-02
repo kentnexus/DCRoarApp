@@ -1,9 +1,15 @@
 package com.paszlelab.dcroarapp.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,8 +19,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,17 +39,31 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.paszlelab.dcroarapp.Activity.LoginPage;
 import com.paszlelab.dcroarapp.R;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class ProfileFragment extends Fragment{
 
     private static final String TAG = "Profile Activity";
@@ -55,11 +78,14 @@ public class ProfileFragment extends Fragment{
     FirebaseFirestore fStore;
     DatabaseReference reference;
     StorageReference storageReference;
-//    CollectionReference collection;
+    //    CollectionReference collection;
     String userId;
 
-    //Hold User detail
+    //Hold User detail & User Activity
     private String FName;
+    ActivityResultLauncher<String> cameraPermissionLauncher;
+    ActivityResultLauncher<Intent> takePhotoLauncher;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -125,6 +151,7 @@ public class ProfileFragment extends Fragment{
 
         //See who's logging in
         FirebaseUser user =  fAuth.getCurrentUser();
+        userId = user.getUid();
         Log.d(TAG, "User ID is >>" + user.getUid());
 
         // Get all the user data and put it to form field
@@ -134,6 +161,49 @@ public class ProfileFragment extends Fragment{
         edEmail.setEnabled(false);
         edPhoneNumber = view.findViewById(R.id.edPhoneNumber);
         loadNote();
+
+        //Get profile picture loaded when fragment is opened
+        storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/"+userId+".jpeg");
+        try{
+            final File localFile = File.createTempFile(userId, "jpeg");
+            storageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            ((ImageView) view.findViewById(R.id.imgProfilePic)).setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Error Occurred",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        };
+
+
+        //Check on user permission to open camera
+        cameraPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+            if(result){
+                takePhoto();
+            }else{
+                actsOnUserResponse();
+            }
+        });
+
+        takePhotoLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if(result.getResultCode() == RESULT_OK){
+                assert result.getData() != null;
+                Bundle bundle = result.getData().getExtras();
+                Bitmap imageBitmap = (Bitmap) bundle.get("data");
+                imgProfilePic.setImageBitmap(imageBitmap);
+                handleUpload(imageBitmap);
+            }
+        });
+
 
 
         //=========================        0         ======================================================
@@ -159,6 +229,7 @@ public class ProfileFragment extends Fragment{
         txtUpdateData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "Data is saved", Toast.LENGTH_SHORT).show();
                 updateUserData();
             }
         });
@@ -262,6 +333,8 @@ public class ProfileFragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getActivity().getApplicationContext(), "Camera is opened", Toast.LENGTH_SHORT).show();
+                        addProfilePic.setOnClickListener(v -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA));
+                        takePhoto();
                     }
                 })
                 .setNegativeButton("Choose Photo", new DialogInterface.OnClickListener() {
@@ -278,9 +351,86 @@ public class ProfileFragment extends Fragment{
     }
     // =============================================================================================
 
+
+
+
+
     // =======================     5.1    ==========================================================
+    // Take picture from Camera
+    private void actsOnUserResponse() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                takePhoto();
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Grant Permission")
+                        .setMessage("Allow this app to take pictures")
+                        .setPositiveButton("Give permission", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                cameraPermissionLauncher.launch(Manifest.permission.CAMERA);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            } else {
+                Toast.makeText(getActivity(), "You denied to take pictures", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void takePhoto(){
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePhotoLauncher.launch(takePhotoIntent);
+    }
+
+    public void handleUpload(Bitmap imageBitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        StorageReference reference = FirebaseStorage.getInstance().getReference()
+                .child("profileImages")
+                .child(userId + ".jpeg");
+
+        reference.putBytes(baos.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>(){
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot){
+                        getDownloadUrl(reference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener(){
+                    @Override
+                    public void onFailure(@NonNull Exception e){
+                        Log.e(TAG, "onFailure: ", e.getCause());
+                    }
+                });
+    }
+
+    private void getDownloadUrl(StorageReference reference){
+        reference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>(){
+                    @Override
+                    public void onSuccess(Uri uri){
+                        Log.d(TAG, "getDownloadUrl: " + uri);
+                    }
+                });
+    }
+
+    // =============================================================================================
+
+
+
+
+
+    // =======================     5.2    ==========================================================
     // Take picture from gallery
-     private void takePictureFromGallery(){
+    private void takePictureFromGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         galleryActivityResultLauncher.launch(intent);
@@ -289,10 +439,16 @@ public class ProfileFragment extends Fragment{
     public ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == Activity.RESULT_OK){
+            if(result.getResultCode() == RESULT_OK){
                 Intent data = result.getData();
                 Uri imageUri = data.getData();
                 imgProfilePic.setImageURI(imageUri);
+                StorageReference reference = FirebaseStorage.getInstance().getReference()
+                        .child("profileImages")
+                        .child(userId + ".jpeg");
+
+                storageReference.putFile(imageUri);
+
 //                StorageReference childRef = storageReference.child("profileImages").child(userId + ".jpg");
 //                UploadTask uploadTask = childRef.putFile(imageUri);
 //                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -347,6 +503,7 @@ public class ProfileFragment extends Fragment{
         }).addOnSuccessListener(new OnSuccessListener<Object>(){
             @Override
             public void onSuccess(Object o) {
+                Toast.makeText(getActivity(), "User is updated", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "User is updated !");
 
             }

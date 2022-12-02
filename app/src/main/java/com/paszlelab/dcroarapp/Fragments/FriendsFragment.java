@@ -18,7 +18,6 @@ import com.paszlelab.dcroarapp.databinding.FragmentFriendsBinding;
 public class FriendsFragment extends Fragment {
 
     FragmentFriendsBinding binding;
-    ImageView btnAdd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,9 +26,13 @@ public class FriendsFragment extends Fragment {
         binding = FragmentFriendsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        btnAdd = view.findViewById(R.id.btnPlus);
+        launchAddFriends();
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        return view;
+    }
+
+    public void launchAddFriends(){
+        binding.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("-","clicked");
@@ -41,8 +44,6 @@ public class FriendsFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
-
-        return view;
     }
+
 }

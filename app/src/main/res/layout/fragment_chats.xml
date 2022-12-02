@@ -41,16 +41,14 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnPlus"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="#00FFFFFF"
                 android:gravity="center"
-                android:text="+"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:src="@drawable/ic_add"/>
 
         </LinearLayout>
 
