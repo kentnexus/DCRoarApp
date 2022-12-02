@@ -1,6 +1,4 @@
-package com.paszlelab.dcroarapp.Models;
-
-import java.util.Date;
+package com.paszlelab.dcroarapp.models;
 
 public class Student {
     private String firstName;

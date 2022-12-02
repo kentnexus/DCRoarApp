@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.paszlelab.dcroarapp.Fragments.DatePickerFragment;
-import com.paszlelab.dcroarapp.Models.Student;
+import com.paszlelab.dcroarapp.models.Student;
 import com.paszlelab.dcroarapp.R;
 
 import java.text.SimpleDateFormat;
