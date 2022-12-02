@@ -53,7 +53,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.paszlelab.dcroarapp.Activity.LoginPage;
+import com.paszlelab.dcroarapp.Models.Student;
 import com.paszlelab.dcroarapp.R;
+
+import org.w3c.dom.Document;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +83,7 @@ public class ProfileFragment extends Fragment{
     FirebaseFirestore fStore;
     DatabaseReference reference;
     StorageReference storageReference;
-    //    CollectionReference collection;
+//    CollectionReference collection;
     String userId;
 
     //Hold User detail & User Activity
@@ -200,7 +205,7 @@ public class ProfileFragment extends Fragment{
                 Bundle bundle = result.getData().getExtras();
                 Bitmap imageBitmap = (Bitmap) bundle.get("data");
                 imgProfilePic.setImageBitmap(imageBitmap);
-                handleUpload(imageBitmap);
+                                handleUpload(imageBitmap);
             }
         });
 
@@ -430,7 +435,7 @@ public class ProfileFragment extends Fragment{
 
     // =======================     5.2    ==========================================================
     // Take picture from gallery
-    private void takePictureFromGallery(){
+     private void takePictureFromGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         galleryActivityResultLauncher.launch(intent);
@@ -503,7 +508,6 @@ public class ProfileFragment extends Fragment{
         }).addOnSuccessListener(new OnSuccessListener<Object>(){
             @Override
             public void onSuccess(Object o) {
-                Toast.makeText(getActivity(), "User is updated", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "User is updated !");
 
             }
