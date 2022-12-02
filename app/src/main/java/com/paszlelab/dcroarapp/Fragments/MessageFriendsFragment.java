@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.paszlelab.dcroarapp.Activity.Messaging;
 import com.paszlelab.dcroarapp.Adapters.FindUsersAdapter;
 import com.paszlelab.dcroarapp.Adapters.UsersAdapter;
+import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.FragmentAddFriendsBinding;
 import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
@@ -24,19 +25,21 @@ import com.paszlelab.dcroarapp.models.Student;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class AddFriendsFragment extends Fragment {
+public class MessageFriendsFragment extends Fragment implements UserListener {
 
     private FragmentAddFriendsBinding binding;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private List<Student> students;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAddFriendsBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        view = binding.getRoot();
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -91,12 +94,13 @@ public class AddFriendsFragment extends Fragment {
                             student.setFirstName(firstName);
                             student.setLastName(lastName);
                             student.setEmailAddress(email);
+                            student.setId(queryDocumentSnapshot.getId());
                             students.add(student);
                             Collections.sort(students, Student.firstNameComparator);
                         }
                         if(students.size()>0){
-                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students);
-                            binding.recyclerViewUsers.setAdapter(findUsersAdapter);
+                            UsersAdapter usersAdapter = new UsersAdapter(students, this);
+                            binding.recyclerViewUsers.setAdapter(usersAdapter);
                             binding.recyclerViewUsers.setVisibility(View.VISIBLE);
                         } else {
                             showErrorMessage();
@@ -160,8 +164,8 @@ public class AddFriendsFragment extends Fragment {
                             }
                         }
                         if(students.size()>0){
-                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students);
-                            binding.recyclerViewUsers.setAdapter(findUsersAdapter);
+                            UsersAdapter usersAdapter = new UsersAdapter(students, this);
+                            binding.recyclerViewUsers.setAdapter(usersAdapter);
                             binding.recyclerViewUsers.setVisibility(View.VISIBLE);
                             binding.txtErrorMessage.setVisibility(View.GONE);
                         } else {
@@ -171,4 +175,20 @@ public class AddFriendsFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onUserClicked(Student student) {
+        Intent intent = new Intent(getActivity().getApplicationContext(),Messaging.class);
+        intent.putExtra("student", student);
+        startActivity(intent);
+        getActivity().onBackPressed();
+    }
+
+//    @Override
+//    public void onUserClicked(Student student, View view) {
+//        Fragment fragment = new archive_MessageFragment();
+//        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.rFrameMessage, fragment);
+//        fragmentTransaction.commit();
+//    }
 }

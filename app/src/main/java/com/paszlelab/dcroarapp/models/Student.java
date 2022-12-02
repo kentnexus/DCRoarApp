@@ -10,6 +10,15 @@ public class Student implements Serializable {
     private String birthday;
     private String gender;
     private String phoneNumber;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

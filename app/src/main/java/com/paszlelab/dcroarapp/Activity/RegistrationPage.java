@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.paszlelab.dcroarapp.Fragments.DatePickerFragment;
@@ -117,11 +118,11 @@ public class RegistrationPage extends AppCompatActivity implements  DatePickerDi
 
 //                                    if email registration is successful
                                         if (task.isSuccessful()) {
-//                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                                                    .setDisplayName(etFName.getText().toString())
-//                                                    .build();
-//
-//                                            firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(etFName.getText().toString()+" "+etLName.getText().toString())
+                                                    .build();
+
+                                            firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
                                             firebaseAuth.getCurrentUser().sendEmailVerification()
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
 

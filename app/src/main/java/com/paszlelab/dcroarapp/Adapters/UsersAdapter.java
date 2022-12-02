@@ -1,17 +1,16 @@
 package com.paszlelab.dcroarapp.Adapters;
 
 import android.graphics.Bitmap;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.google.firebase.firestore.auth.User;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.paszlelab.dcroarapp.databinding.FriendItemLayoutBinding;
+import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
 
 import java.util.List;
@@ -19,9 +18,11 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
     private final List<Student> students;
+    private final UserListener userListener;
 
-    public UsersAdapter(List<Student> students){
+    public UsersAdapter(List<Student> students,UserListener userListener){
         this.students = students;
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -55,6 +56,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             binding.txtFriendName.setText(student.getFirstName()+" "+student.getLastName());
             binding.txtEmailAddress.setText(student.getEmailAddress());
 //            binding.imgUserProfile.setImageBitmap(getUserImage());
+            binding.getRoot().setOnClickListener(v -> userListener.onUserClicked(student));
         }
     }
 

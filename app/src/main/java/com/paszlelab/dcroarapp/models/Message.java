@@ -1,17 +1,13 @@
 package com.paszlelab.dcroarapp.models;
 
+import java.util.Date;
+
 public class Message {
-    private String sender, receiver, message, date, type;
+    private String sender, receiver, message, dateTime;
+    private Date date;
+    private String conversionId, conversionName, conversionMessage, conversionImage, conversionDate;
 
     public Message() {
-    }
-
-    public Message(String sender, String receiver, String message, String date, String type) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.message = message;
-        this.date = date;
-        this.type = type;
     }
 
     public String getSender() {
@@ -38,19 +34,59 @@ public class Message {
         this.message = message;
     }
 
-    public String getDate() {
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
+    public String getConversionId() {
+        return conversionId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setConversionId(String conversionId) {
+        this.conversionId = conversionId;
+    }
+
+    public String getConversionName() {
+        return conversionName;
+    }
+
+    public void setConversionName(String conversionName) {
+        this.conversionName = conversionName;
+    }
+
+    public String getConversionMessage() {
+        return conversionMessage;
+    }
+
+    public void setConversionMessage(String conversionMessage) {
+        this.conversionMessage = conversionMessage;
+    }
+
+    public String getConversionImage() {
+        return conversionImage;
+    }
+
+    public void setConversionImage(String conversionImage) {
+        this.conversionImage = conversionImage;
+    }
+
+    public String getConversionDate() {
+        return conversionDate;
+    }
+
+    public void setConversionDate(String conversionDate) {
+        this.conversionDate = conversionDate;
     }
 }

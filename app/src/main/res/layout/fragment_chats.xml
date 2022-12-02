@@ -48,9 +48,30 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="#00FFFFFF"
                 android:gravity="center"
-                android:src="@drawable/ic_add"/>
+                android:src="@drawable/ic_add"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rViewRecentMessages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navtop"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <FrameLayout
+            android:id="@+id/rFrameFindReceiver"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
