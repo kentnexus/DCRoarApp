@@ -130,7 +130,8 @@ public class Messaging extends AppCompatActivity {
 
     private void loadReceiverDetails() {
         receiver = (Student) getIntent().getSerializableExtra("student");
-        binding.toolbar.txtMessageSender.setText(receiver.getFirstName() + " " + receiver.getLastName());
+//        binding.toolbar.txtMessageSender.setText(receiver.getFirstName() + " " + receiver.getLastName());
+        binding.toolbar.txtMessageSender.setText(receiver.getEmailAddress());
     }
 
     private void setListeners() {
@@ -182,7 +183,7 @@ public class Messaging extends AppCompatActivity {
         if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
             DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
             conversationId = documentSnapshot.getId();
-            Log.d("-", conversationId);
+//            Log.d("-", conversationId);
         }
     };
 }

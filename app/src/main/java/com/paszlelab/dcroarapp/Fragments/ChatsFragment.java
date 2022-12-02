@@ -1,10 +1,9 @@
 package com.paszlelab.dcroarapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,16 +15,19 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.paszlelab.dcroarapp.Activity.Messaging;
 import com.paszlelab.dcroarapp.Adapters.RecentConversationsAdapter;
-import com.paszlelab.dcroarapp.R;
+import com.paszlelab.dcroarapp.Activity.Message_Friends;
 import com.paszlelab.dcroarapp.databinding.FragmentChatsBinding;
+import com.paszlelab.dcroarapp.listeners.ConversationListener;
 import com.paszlelab.dcroarapp.models.Message;
+import com.paszlelab.dcroarapp.models.Student;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ChatsFragment extends Fragment {
+public class ChatsFragment extends Fragment implements ConversationListener {
 
     private FragmentChatsBinding binding;
     private FirebaseAuth auth;
@@ -51,7 +53,7 @@ public class ChatsFragment extends Fragment {
     private void init() {
         conversations = new ArrayList<>();
         auth = FirebaseAuth.getInstance();
-        recentConversationsAdapter = new RecentConversationsAdapter(conversations);
+        recentConversationsAdapter = new RecentConversationsAdapter(conversations, this);
         binding.rViewRecentMessages.setAdapter(recentConversationsAdapter);
         db = FirebaseFirestore.getInstance();
     }
@@ -60,11 +62,9 @@ public class ChatsFragment extends Fragment {
         binding.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new MessageFriendsFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.rFrameFindReceiver, fragment);
-                fragmentTransaction.commit();
+
+                Intent intent = new Intent(getActivity().getApplicationContext(), Message_Friends.class);
+                startActivity(intent);
             }
         });
     }
@@ -120,4 +120,11 @@ public class ChatsFragment extends Fragment {
             binding.rViewRecentMessages.setVisibility(View.VISIBLE);
         }
     };
+
+    @Override
+    public void onConversationClicked(Student student) {
+        Intent intent = new Intent(getActivity().getApplicationContext(), Messaging.class);
+        intent.putExtra("student", student);
+        startActivity(intent);
+    }
 }

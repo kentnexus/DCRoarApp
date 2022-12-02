@@ -1,5 +1,6 @@
 package com.paszlelab.dcroarapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.paszlelab.dcroarapp.Activity.Add_Friends;
+import com.paszlelab.dcroarapp.Activity.Message_Friends;
 import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.FragmentFriendsBinding;
 
@@ -35,11 +38,9 @@ public class FriendsFragment extends Fragment {
         binding.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new AddFriendsFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.rFrameAddFriends, fragment);
-                fragmentTransaction.commit();
+
+                Intent intent = new Intent(getActivity().getApplicationContext(), Add_Friends.class);
+                startActivity(intent);
             }
         });
     }

@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.paszlelab.dcroarapp.R;
-import com.paszlelab.dcroarapp.databinding.ActivityMessagingBinding;
 import com.paszlelab.dcroarapp.databinding.ArchiveFragmentMessageBinding;
-import com.paszlelab.dcroarapp.databinding.FragmentAddFriendsBinding;
 import com.paszlelab.dcroarapp.models.Student;
 
 public class archive_MessageFragment extends Fragment {

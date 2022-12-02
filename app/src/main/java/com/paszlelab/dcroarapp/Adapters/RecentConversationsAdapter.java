@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paszlelab.dcroarapp.databinding.MessageItemLayoutBinding;
+import com.paszlelab.dcroarapp.listeners.ConversationListener;
 import com.paszlelab.dcroarapp.models.Message;
+import com.paszlelab.dcroarapp.models.Student;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,9 +20,11 @@ import java.util.Locale;
 public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConversationsAdapter.ConversionViewHolder> {
 
     private final List<Message> messages;
+    private final ConversationListener conversationListener;
 
-    public RecentConversationsAdapter(List<Message> messages) {
+    public RecentConversationsAdapter(List<Message> messages, ConversationListener conversationListener) {
         this.messages = messages;
+        this.conversationListener = conversationListener;
     }
 
     @NonNull
@@ -40,7 +44,7 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
 
     @Override
     public int getItemCount() {
-        Log.d("-", messages.size()+" items");
+//        Log.d("-", messages.size()+" items");
         return messages.size();
     }
 
@@ -53,9 +57,16 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
         }
 
         void setData(Message message){
+//TODO:add picture
             binding.txtName.setText(message.getConversionName());
             binding.txtLastMessage.setText(message.getMessage());
             binding.txtDate.setText(getReadableDateTime(message.getDate()));
+            binding.getRoot().setOnClickListener(v->{
+                Student student = new Student();
+                student.setId(message.getConversionId());
+                student.setEmailAddress(message.getConversionName());
+                conversationListener.onConversationClicked(student);
+            });
         }
     }
 
