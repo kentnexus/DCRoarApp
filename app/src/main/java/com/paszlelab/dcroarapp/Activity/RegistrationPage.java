@@ -21,10 +21,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.paszlelab.dcroarapp.Fragments.DatePickerFragment;
-import com.paszlelab.dcroarapp.Models.Student;
+import com.paszlelab.dcroarapp.models.Student;
 import com.paszlelab.dcroarapp.R;
 
 import java.text.SimpleDateFormat;
@@ -117,11 +118,11 @@ public class RegistrationPage extends AppCompatActivity implements  DatePickerDi
 
 //                                    if email registration is successful
                                         if (task.isSuccessful()) {
-//                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                                                    .setDisplayName(etFName.getText().toString())
-//                                                    .build();
-//
-//                                            firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(etFName.getText().toString()+" "+etLName.getText().toString())
+                                                    .build();
+
+                                            firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
                                             firebaseAuth.getCurrentUser().sendEmailVerification()
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
 
@@ -211,6 +212,10 @@ public class RegistrationPage extends AppCompatActivity implements  DatePickerDi
         String currentDateString = simpleDateFormat.format(c.getTime());
 
         return currentDateString;
+    }
+
+    public void goToLogin(View v){
+        startActivity(new Intent(this, LoginPage.class));
     }
 
 

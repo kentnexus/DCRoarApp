@@ -3,64 +3,121 @@ package com.paszlelab.dcroarapp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.paszlelab.dcroarapp.Adapters.RecentConversationsAdapter;
 import com.paszlelab.dcroarapp.R;
+import com.paszlelab.dcroarapp.databinding.FragmentChatsBinding;
+import com.paszlelab.dcroarapp.models.Message;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ChatsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ChatsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChatsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChatsFragment newInstance(String param1, String param2) {
-        ChatsFragment fragment = new ChatsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private FragmentChatsBinding binding;
+    private FirebaseAuth auth;
+    private List<Message> conversations;
+    private RecentConversationsAdapter recentConversationsAdapter;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chats, container, false);
+        binding = FragmentChatsBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        init();
+        launchFindFriends();
+        listenConversations();
+//
+//        Log.d("-", conversations.size()+"");
+        return view;
     }
+
+    private void init() {
+        conversations = new ArrayList<>();
+        auth = FirebaseAuth.getInstance();
+        recentConversationsAdapter = new RecentConversationsAdapter(conversations);
+        binding.rViewRecentMessages.setAdapter(recentConversationsAdapter);
+        db = FirebaseFirestore.getInstance();
+    }
+
+    public void launchFindFriends() {
+        binding.btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new MessageFriendsFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.rFrameFindReceiver, fragment);
+                fragmentTransaction.commit();
+            }
+        });
+    }
+
+    private void listenConversations(){
+        db.collection("RecentConvo")
+                .whereEqualTo("senderId", auth.getCurrentUser().getUid())
+                .addSnapshotListener(eventListener);
+        db.collection("RecentConvo")
+                .whereEqualTo("receiverId", auth.getCurrentUser().getUid())
+                .addSnapshotListener(eventListener);
+    }
+
+    private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
+        if (error != null) {
+            return;
+        }
+        if (value != null) {
+            for (DocumentChange documentChange : value.getDocumentChanges()) {
+                if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                    String senderId = documentChange.getDocument().getString("senderId");
+                    String receiverId = documentChange.getDocument().getString("receiverId");
+                    Message message = new Message();
+                    message.setSender(senderId);
+                    message.setReceiver(receiverId);
+                    if (auth.getCurrentUser().getUid().equals(senderId)) {
+                        message.setConversionName(documentChange.getDocument().getString("receiverName"));
+                        message.setConversionId(documentChange.getDocument().getString("receiverId"));
+                    } else {
+                        message.setConversionName(documentChange.getDocument().getString("senderName"));
+                        message.setConversionId(documentChange.getDocument().getString("senderId"));
+                    }
+                    message.setMessage(documentChange.getDocument().getString("lastMessage"));
+                    message.setDate(documentChange.getDocument().getDate("timestamp"));
+                    conversations.add(message);
+                } else if (documentChange.getType() == DocumentChange.Type.MODIFIED) {
+                    for (int i = 0; i < conversations.size(); i++) {
+                        Log.d("-","this works");
+                        String senderId = documentChange.getDocument().getString("senderId");
+                        String receiverId = documentChange.getDocument().getString("receiverId");
+                        if(conversations.get(i).getSender().equals(senderId) &&
+                                    conversations.get(i).getReceiver().equals(receiverId)){
+                            conversations.get(i).setMessage(documentChange.getDocument().getString("lastMessage"));
+                            conversations.get(i).setDate(documentChange.getDocument().getDate("timestamp"));
+                            break;
+                        }
+                    }
+                }
+            }
+            Collections.sort(conversations,(obj1, obj2) -> obj2.getDate().compareTo(obj1.getDate()));
+            recentConversationsAdapter.notifyDataSetChanged();
+            binding.rViewRecentMessages.smoothScrollToPosition(0);
+            binding.rViewRecentMessages.setVisibility(View.VISIBLE);
+        }
+    };
 }

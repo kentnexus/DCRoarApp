@@ -2,7 +2,9 @@ package com.paszlelab.dcroarapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,8 +26,9 @@ public class OnboardingPage extends AppCompatActivity {
 //            SharedPreferences.Editor editor = sharedpreferences.edit();
 //            editor.putBoolean(prevStarted, Boolean.TRUE);
 //            editor.apply();
-//        } else {
-//            goToLogin();
+//        } else
+//        {
+//
 //        }
 //    }
 

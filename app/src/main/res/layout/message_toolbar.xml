@@ -15,12 +15,21 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
         android:src="@drawable/welcomeroar"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/txtMessageSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="name"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <Button
         android:layout_width="25dp"
