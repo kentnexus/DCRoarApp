@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/navtop"
@@ -68,11 +69,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navtop">
 
-            <!--                app:layout_constraintTop_toBottomOf="@+id/imgIconPic"--><![CDATA[
-                tools:ignore="MissingClass,MissingConstraints" />
-
-            ]]>
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgProfilePic"
                 android:layout_width="96dp"
@@ -117,287 +113,298 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/profilePicLayout">
+            android:animateLayoutChanges="true"
+            android:fillViewport="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profilePicLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="PROFILE"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="PROFILE"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/txtUserName"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="48dp"-->
+                    <!--                android:layout_marginStart="10dp"-->
+                    <!--                android:ems="9"-->
+                    <!--                android:gravity="center_vertical"-->
+                    <!--                android:text="Username"-->
+                    <!--                android:textColor="#000000"-->
+                    <!--                android:textSize="18dp"-->
+                    <!--                app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+                    <!--            <EditText-->
+                    <!--                android:id="@+id/edUserName"-->
+                    <!--                android:layout_width="200dp"-->
+                    <!--                android:layout_height="48dp"-->
+                    <!--                android:background="@drawable/edittext_border"-->
+                    <!--                android:ems="10"-->
+                    <!--                android:hint="John Doe"-->
+                    <!--                android:inputType="textPersonName"-->
+                    <!--                android:paddingLeft="10dp"-->
+                    <!--                android:textSize="12sp"-->
+                    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+                    <TextView
+                        android:id="@+id/txtFName"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:ems="9"
+                        android:gravity="center_vertical"
+                        android:text="First Name"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/edFName"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/edittext_border"
+                        android:ems="10"
+                        android:hint="John"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/txtFName"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtLName"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:ems="9"
+                        android:gravity="center_vertical"
+                        android:text="Last Name"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtFName" />
+
+                    <EditText
+                        android:id="@+id/edLName"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/edittext_border"
+                        android:ems="10"
+                        android:hint="Doe"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/txtFName"
+                        app:layout_constraintTop_toBottomOf="@+id/edFName" />
+
+                    <TextView
+                        android:id="@+id/txtEmail"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:ems="9"
+                        android:gravity="center_vertical"
+                        android:text="Email"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtLName" />
+
+                    <EditText
+                        android:id="@+id/edEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/edittext_border"
+                        android:ems="10"
+                        android:hint="john.doe@gmail.com"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/txtFName"
+                        app:layout_constraintTop_toBottomOf="@+id/edLName" />
+
+                    <TextView
+                        android:id="@+id/txtPhoneNumber"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:ems="9"
+                        android:gravity="center_vertical"
+                        android:text="Phone Number"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
+                    <EditText
+                        android:id="@+id/edPhoneNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/edittext_border"
+                        android:ems="10"
+                        android:hint="123 456 "
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/txtFName"
+                        app:layout_constraintTop_toBottomOf="@+id/edEmail" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <!--            <TextView-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:layout_marginLeft="5dp"-->
+                    <!--                android:layout_marginTop="10dp"-->
+                    <!--                android:layout_marginBottom="5dp"-->
+                    <!--                android:text="ACCOUNT"-->
+                    <!--                android:textColor="@color/black"-->
+                    <!--                android:textSize="20sp"-->
+                    <!--                android:textStyle="bold" />-->
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <!--        <TextView-->
+                    <!--            android:id="@+id/txtPassword"-->
+                    <!--            android:layout_width="wrap_content"-->
+                    <!--            android:layout_height="48dp"-->
+                    <!--            android:layout_marginStart="10dp"-->
+                    <!--            android:ems="9"-->
+                    <!--            android:gravity="center_vertical"-->
+                    <!--            android:text=" Password"-->
+                    <!--            android:textColor="#000000"-->
+                    <!--            android:textSize="18dp"-->
+                    <!--            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+                    <!--        <EditText-->
+                    <!--            android:id="@+id/edPassword"-->
+                    <!--            android:layout_width="200dp"-->
+                    <!--            android:layout_height="48dp"-->
+                    <!--            android:background="@drawable/edittext_border"-->
+                    <!--            android:ems="10"-->
+                    <!--            android:hint="*********"-->
+                    <!--            android:inputType="textPassword"-->
+                    <!--            android:paddingLeft="10dp"-->
+                    <!--            app:layout_constraintStart_toEndOf="@+id/txtPassword"-->
+                    <!--            android:drawableRight="@drawable/ic_baseline_visibility_off_24"-->
+                    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--            android:paddingRight="10dp"-->
+                    <!--            android:longClickable="false"-->
+                    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+                    <TextView
+                        android:id="@+id/txtUpdateData"
+                        android:layout_width="200dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/edittext_border"
+                        android:clickable="true"
+                        android:ems="9"
+                        android:gravity="center"
+                        android:onClick="update"
+                        android:text="Save Update"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtResetPassword"
+                        android:layout_width="200dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_border"
+                        android:clickable="true"
+                        android:ems="9"
+                        android:gravity="center"
+                        android:text="Reset Password"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.504"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUpdateData" />
+
+                    <TextView
+                        android:id="@+id/txtSignOut"
+                        android:layout_width="200dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_border"
+                        android:ems="9"
+                        android:gravity="center"
+                        android:text="Sign Out"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtResetPassword" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="395dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-<!--            <TextView-->
-<!--                android:id="@+id/txtUserName"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:ems="9"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:text="Username"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="18dp"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edUserName"-->
-<!--                android:layout_width="200dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:background="@drawable/edittext_border"-->
-<!--                android:ems="10"-->
-<!--                android:hint="John Doe"-->
-<!--                android:inputType="textPersonName"-->
-<!--                android:paddingLeft="10dp"-->
-<!--                android:textSize="12sp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <TextView
-                android:id="@+id/txtFName"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:ems="9"
-                android:gravity="center_vertical"
-                android:text="First Name"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/edFName"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:background="@drawable/edittext_border"
-                android:ems="10"
-                android:hint="John"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtFName"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtLName"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:ems="9"
-                android:gravity="center_vertical"
-                android:text="Last Name"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtFName" />
-
-            <EditText
-                android:id="@+id/edLName"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_border"
-                android:ems="10"
-                android:hint="Doe"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtFName"
-                app:layout_constraintTop_toBottomOf="@+id/edFName" />
-
-            <TextView
-                android:id="@+id/txtEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:ems="9"
-                android:gravity="center_vertical"
-                android:text="Email"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLName" />
-
-            <EditText
-                android:id="@+id/edEmail"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_border"
-                android:ems="10"
-                android:hint="john.doe@gmail.com"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtFName"
-                app:layout_constraintTop_toBottomOf="@+id/edLName" />
-
-            <TextView
-                android:id="@+id/txtPhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:ems="9"
-                android:gravity="center_vertical"
-                android:text="Phone Number"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
-
-            <EditText
-                android:id="@+id/edPhoneNumber"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_border"
-                android:ems="10"
-                android:hint="123 456 "
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtFName"
-                app:layout_constraintTop_toBottomOf="@+id/edEmail" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/constraintLayout">
-
-            <!--            <TextView-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginLeft="5dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginBottom="5dp"-->
-            <!--                android:text="ACCOUNT"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-
-        </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtPassword"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:ems="9"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:text=" Password"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="18dp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/edPassword"-->
-<!--            android:layout_width="200dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="@drawable/edittext_border"-->
-<!--            android:ems="10"-->
-<!--            android:hint="*********"-->
-<!--            android:inputType="textPassword"-->
-<!--            android:paddingLeft="10dp"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/txtPassword"-->
-<!--            android:drawableRight="@drawable/ic_baseline_visibility_off_24"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:paddingRight="10dp"-->
-<!--            android:longClickable="false"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <TextView
-            android:id="@+id/txtUpdateData"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:background="@drawable/edittext_border"
-            android:clickable="true"
-            android:ems="9"
-            android:gravity="center"
-            android:onClick="update"
-            android:text="Save Update"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtResetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_border"
-            android:clickable="true"
-            android:ems="9"
-            android:gravity="center"
-            android:text="Reset Password"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtUpdateData" />
-
-        <TextView
-            android:id="@+id/txtSignOut"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_border"
-            android:ems="9"
-            android:gravity="center"
-            android:text="Sign Out"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtResetPassword" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

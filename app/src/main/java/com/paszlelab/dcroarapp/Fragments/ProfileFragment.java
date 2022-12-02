@@ -41,12 +41,6 @@ import com.google.firebase.storage.StorageReference;
 import com.paszlelab.dcroarapp.Activity.LoginPage;
 import com.paszlelab.dcroarapp.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment{
 
     private static final String TAG = "Profile Activity";
