@@ -26,7 +26,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/ic_back"
                 android:layout_gravity="center"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -37,7 +36,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
                 android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
                 app:iconifiedByDefault="false"
-                app:queryHint="Search User" />
+                app:queryHint="Search Friend" />
 
             <Button
                 style="?android:attr/borderlessButtonStyle"

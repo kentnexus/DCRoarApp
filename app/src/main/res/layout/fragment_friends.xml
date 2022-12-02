@@ -48,21 +48,39 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="#00FFFFFF"
                 android:gravity="center"
-                android:src="@drawable/ic_add"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/rFrameAddFriends"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rViewFriends"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/navtop" />-->
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/rFrameAddFriends"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="parent">-->
+
+<!--        </FrameLayout>-->
+
+        <include
+            android:id="@+id/mainDisp"
+            layout="@layout/activity_add_friends"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/navtop" />
 
-        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

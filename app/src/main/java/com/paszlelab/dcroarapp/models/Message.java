@@ -3,7 +3,7 @@ package com.paszlelab.dcroarapp.models;
 import java.util.Date;
 
 public class Message {
-    private String sender, receiver, message, dateTime;
+    private String sender, receiver, message, dateTime, img;
     private Date date;
     private String conversionId, conversionName, conversionMessage, conversionImage, conversionDate;
 
@@ -88,5 +88,13 @@ public class Message {
 
     public void setConversionDate(String conversionDate) {
         this.conversionDate = conversionDate;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

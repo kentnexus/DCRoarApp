@@ -3,6 +3,7 @@ package com.paszlelab.dcroarapp.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +14,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.paszlelab.dcroarapp.Adapters.FindUsersAdapter;
 import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.ActivityAddFriendsBinding;
+import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Add_Friends extends AppCompatActivity {
+public class Add_Friends extends AppCompatActivity implements UserListener {
 
     private ActivityAddFriendsBinding binding;
     private FirebaseAuth auth;
@@ -71,9 +73,12 @@ public class Add_Friends extends AppCompatActivity {
                         students = new ArrayList<>();
                         for(QueryDocumentSnapshot queryDocumentSnapshot:task.getResult()) {
 
+                            String userId = queryDocumentSnapshot.getId();
                             String firstName = queryDocumentSnapshot.getString("firstName");
                             String lastName = queryDocumentSnapshot.getString("lastName");
                             String email = queryDocumentSnapshot.getString("emailAddress");
+                            String gender = queryDocumentSnapshot.getString("gender");
+                            String dob = queryDocumentSnapshot.getString("birthday");
 
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
@@ -84,11 +89,14 @@ public class Add_Friends extends AppCompatActivity {
                             student.setFirstName(firstName);
                             student.setLastName(lastName);
                             student.setEmailAddress(email);
+                            student.setGender(gender);
+                            student.setBirthday(dob);
+                            student.setId(userId);
                             students.add(student);
                             Collections.sort(students, Student.firstNameComparator);
                         }
                         if(students.size()>0){
-                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students);
+                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students, this);
                             binding.recyclerViewUsers.setAdapter(findUsersAdapter);
                             binding.recyclerViewUsers.setVisibility(View.VISIBLE);
                         } else {
@@ -132,9 +140,12 @@ public class Add_Friends extends AppCompatActivity {
                         List<Student> students = new ArrayList<>();
                         for(QueryDocumentSnapshot queryDocumentSnapshot:task.getResult()) {
 
+                            String userId = queryDocumentSnapshot.getId();
                             String firstName = queryDocumentSnapshot.getString("firstName");
                             String lastName = queryDocumentSnapshot.getString("lastName");
                             String email = queryDocumentSnapshot.getString("emailAddress");
+                            String gender = queryDocumentSnapshot.getString("gender");
+                            String dob = queryDocumentSnapshot.getString("birthday");
 
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
@@ -148,12 +159,15 @@ public class Add_Friends extends AppCompatActivity {
                                     student.setFirstName(firstName);
                                     student.setLastName(lastName);
                                     student.setEmailAddress(email);
+                                    student.setGender(gender);
+                                    student.setBirthday(dob);
+                                    student.setId(userId);
                                     students.add(student);
                                 }
                             }
                         }
                         if(students.size()>0){
-                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students);
+                            FindUsersAdapter findUsersAdapter = new FindUsersAdapter(students, this);
                             binding.recyclerViewUsers.setAdapter(findUsersAdapter);
                             binding.recyclerViewUsers.setVisibility(View.VISIBLE);
                             binding.txtErrorMessage.setVisibility(View.GONE);
@@ -162,5 +176,13 @@ public class Add_Friends extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onUserClicked(Student student) {
+        Intent intent = new Intent(getApplicationContext(), UserProfile.class);
+        intent.putExtra("student", student);
+        startActivity(intent);
+        this.finish();
     }
 }

@@ -76,6 +76,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                             String firstName = queryDocumentSnapshot.getString("firstName");
                             String lastName = queryDocumentSnapshot.getString("lastName");
                             String email = queryDocumentSnapshot.getString("emailAddress");
+                            String img = queryDocumentSnapshot.getId()+".jpeg";
 
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
@@ -87,6 +88,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                             student.setLastName(lastName);
                             student.setEmailAddress(email);
                             student.setId(queryDocumentSnapshot.getId());
+                            student.setImg(img);
                             students.add(student);
                             Collections.sort(students, Student.firstNameComparator);
                         }
@@ -138,6 +140,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                             String firstName = queryDocumentSnapshot.getString("firstName");
                             String lastName = queryDocumentSnapshot.getString("lastName");
                             String email = queryDocumentSnapshot.getString("emailAddress");
+                            String img = queryDocumentSnapshot.getId()+".jpeg";
 
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
@@ -150,6 +153,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                                     student.setFirstName(firstName);
                                     student.setLastName(lastName);
                                     student.setEmailAddress(email);
+                                    student.setImg(img);
                                     students.add(student);
                                 }
                             }

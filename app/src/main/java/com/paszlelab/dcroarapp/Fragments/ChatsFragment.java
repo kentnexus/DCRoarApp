@@ -93,9 +93,11 @@ public class ChatsFragment extends Fragment implements ConversationListener {
                     if (auth.getCurrentUser().getUid().equals(senderId)) {
                         message.setConversionName(documentChange.getDocument().getString("receiverName"));
                         message.setConversionId(documentChange.getDocument().getString("receiverId"));
+                        message.setConversionImage(documentChange.getDocument().getString("receiverId")+".jpeg");
                     } else {
                         message.setConversionName(documentChange.getDocument().getString("senderName"));
                         message.setConversionId(documentChange.getDocument().getString("senderId"));
+                        message.setConversionImage(documentChange.getDocument().getString("senderId")+".jpeg");
                     }
                     message.setMessage(documentChange.getDocument().getString("lastMessage"));
                     message.setDate(documentChange.getDocument().getDate("timestamp"));

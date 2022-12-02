@@ -9,16 +9,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.paszlelab.dcroarapp.databinding.FriendItemLayoutBinding;
 import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
 
+import java.io.File;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
     private final List<Student> students;
     private final UserListener userListener;
+    private StorageReference storageReference;
 
     public UsersAdapter(List<Student> students,UserListener userListener){
         this.students = students;
@@ -56,6 +63,28 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             binding.txtFriendName.setText(student.getFirstName()+" "+student.getLastName());
             binding.txtEmailAddress.setText(student.getEmailAddress());
 //            binding.imgUserProfile.setImageBitmap(getUserImage());
+            String imgSrc = student.getImg();
+
+                        try {
+                storageReference = FirebaseStorage.getInstance()
+                        .getReference().child("profileImages/" + imgSrc);
+
+                final File localFile = File.createTempFile(student.getId(),"jpeg");
+                storageReference.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                binding.imgUserProfile.setImageBitmap(bitmap);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+            } catch(Exception e){}
+
             binding.getRoot().setOnClickListener(v -> userListener.onUserClicked(student));
         }
     }

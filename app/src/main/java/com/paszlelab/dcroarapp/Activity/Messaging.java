@@ -1,12 +1,17 @@
 package com.paszlelab.dcroarapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -14,11 +19,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.paszlelab.dcroarapp.Adapters.MessageAdapter;
 import com.paszlelab.dcroarapp.databinding.ActivityMessagingBinding;
 import com.paszlelab.dcroarapp.models.Message;
 import com.paszlelab.dcroarapp.models.Student;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +45,7 @@ public class Messaging extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private String conversationId = null;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +70,29 @@ public class Messaging extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        HashMap<String, Object> message = new HashMap<>();
-        message.put("senderId", auth.getCurrentUser().getUid());
-        message.put("receiverId", receiver.getId());
-        message.put("message", binding.editTextMessage.getText().toString());
-        message.put("timestamp", new Date());
-        db.collection("message").add(message);
-        if (conversationId != null) {
-            Log.d("-", conversationId);
-            updateConversation(binding.editTextMessage.getText().toString());
-        } else {
-            HashMap<String, Object> conversation = new HashMap<>();
-            conversation.put("senderId", auth.getCurrentUser().getUid());
-            conversation.put("senderName", auth.getCurrentUser().getEmail());
-            conversation.put("receiverId", receiver.getId());
-            conversation.put("receiverName", receiver.getEmailAddress());
-            conversation.put("lastMessage", binding.editTextMessage.getText().toString());
-            conversation.put("timestamp", new Date());
-            addConversation(conversation);
+        if (!binding.editTextMessage.getText().toString().isEmpty()) {
+            HashMap<String, Object> message = new HashMap<>();
+            message.put("senderId", auth.getCurrentUser().getUid());
+            message.put("receiverId", receiver.getId());
+            message.put("message", binding.editTextMessage.getText().toString());
+            message.put("timestamp", new Date());
+            db.collection("message").add(message);
+            if (conversationId != null) {
+                Log.d("-", conversationId + " id");
+                updateConversation(binding.editTextMessage.getText().toString());
+            } else {
+                Log.d("-", "no id");
+                HashMap<String, Object> conversation = new HashMap<>();
+                conversation.put("senderId", auth.getCurrentUser().getUid());
+                conversation.put("senderName", auth.getCurrentUser().getEmail());
+                conversation.put("receiverId", receiver.getId());
+                conversation.put("receiverName", receiver.getEmailAddress());
+                conversation.put("lastMessage", binding.editTextMessage.getText().toString());
+                conversation.put("timestamp", new Date());
+                addConversation(conversation);
+            }
+            binding.editTextMessage.setText(null);
         }
-        binding.editTextMessage.setText(null);
     }
 
     //TODO: add picture
@@ -123,7 +136,7 @@ public class Messaging extends AppCompatActivity {
             binding.rViewMessages.setVisibility(View.VISIBLE);
         }
 //        binding.progressBar.setVisibility(View.GONE);
-        if (conversationId != null) {
+        if (conversationId == null) {
             checkForConversation();
         }
     };
@@ -132,6 +145,27 @@ public class Messaging extends AppCompatActivity {
         receiver = (Student) getIntent().getSerializableExtra("student");
 //        binding.toolbar.txtMessageSender.setText(receiver.getFirstName() + " " + receiver.getLastName());
         binding.toolbar.txtMessageSender.setText(receiver.getEmailAddress());
+        String imgSrc = receiver.getId()+".jpeg";
+
+        try {
+            storageReference = FirebaseStorage.getInstance()
+                    .getReference().child("profileImages/" + imgSrc);
+
+            final File localFile = File.createTempFile(receiver.getId(),"jpeg");
+            storageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            binding.toolbar.profileImage.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        } catch(Exception e){}
     }
 
     private void setListeners() {
