@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.paszlelab.dcroarapp.Validations.FieldsFragment;
+import com.paszlelab.dcroarapp.Validations.ValidateFields;
 import com.paszlelab.dcroarapp.R;
 
 public class LoginPage extends AppCompatActivity {
@@ -48,8 +48,8 @@ public class LoginPage extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean notEmptyEmail = FieldsFragment.requiredField(etEmail, "Email Address");
-                boolean notEmptyPW = FieldsFragment.requiredField(etPW, "Password");
+                boolean notEmptyEmail = ValidateFields.requiredField(etEmail, "Email Address");
+                boolean notEmptyPW = ValidateFields.requiredField(etPW, "Password");
                 if(notEmptyEmail == true && notEmptyPW == true){
                     progressBar.setVisibility(View.VISIBLE);
                     firebaseAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPW.getText().toString())

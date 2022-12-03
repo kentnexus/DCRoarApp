@@ -3,6 +3,7 @@ package com.paszlelab.dcroarapp.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -13,19 +14,29 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.paszlelab.dcroarapp.Activity.CoursePage;
 import com.paszlelab.dcroarapp.Adapters.CourseAdapter;
 import com.paszlelab.dcroarapp.databinding.FragmentCoursesBinding;
+import com.paszlelab.dcroarapp.listeners.CourseListener;
 import com.paszlelab.dcroarapp.models.CourseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class CoursesFragment extends Fragment {
+public class CoursesFragment extends Fragment implements CourseListener {
 
     private FragmentCoursesBinding binding;
     private ArrayList<CourseModel> courseModelArrayList;
     CourseAdapter adapter;
-    private CourseAdapter.CourseClickListener listener;
+//    private CourseAdapter.CourseClickListener listener;
+    private FirebaseFirestore db;
 
 
     @Override
@@ -33,6 +44,7 @@ public class CoursesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCoursesBinding.inflate(inflater, container,false);
         View view = binding.getRoot();
+        db = FirebaseFirestore.getInstance();
 
         getCourses();
 
@@ -40,19 +52,21 @@ public class CoursesFragment extends Fragment {
         binding.searchId.setQueryHint("Type here");
         binding.searchId.setIconified(false);
         binding.searchId.clearFocus();
-        binding.searchId.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filteredSearch(query);
-                return true;
-            }
+//        binding.searchId.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                filteredSearch(query);
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                filteredSearch(newText);
+//                return true;
+//            }
+//        });
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filteredSearch(newText);
-                return true;
-            }
-        });
+        getList();
 
         // Inflate the layout for this fragment
         return view;
@@ -84,7 +98,7 @@ public class CoursesFragment extends Fragment {
             Toast.makeText(getContext(),"No Course Found..", Toast.LENGTH_SHORT).show();
             Log.d("Empty filter: ", "no course found");
         } else {
-            adapter = new CourseAdapter(filteredlist,listener, CoursesFragment.this);
+//            adapter = new CourseAdapter(filteredlist,listener, CoursesFragment.this);
             binding.courseRView.setAdapter(adapter);
         }
 
@@ -95,14 +109,17 @@ public class CoursesFragment extends Fragment {
         courseModelArrayList = new ArrayList<CourseModel>();
 
         // below line is to add data to our array list.
-        courseModelArrayList.add(new CourseModel("BUSN 1198", "BUSINESS EXPLORATIONS I"));
-        courseModelArrayList.add(new CourseModel("BUSN 1200", "FUNDAMENTALS OF BUSINESS"));
-        courseModelArrayList.add(new CourseModel("CSIS 3175", "INTRODUCTION TO MOBILE APPLICATION DEVELOPMENT"));
-        courseModelArrayList.add(new CourseModel("CSIS 1275", "INTRODUCTION TO PROGRAMMING II"));
-        courseModelArrayList.add(new CourseModel("CSIS 1280", "MULTIMEDIA WEB DEVELOPMENT"));
+//        courseModelArrayList.add(new CourseModel("BUSN 1198", "BUSINESS EXPLORATIONS I"));
+//        courseModelArrayList.add(new CourseModel("BUSN 1200", "FUNDAMENTALS OF BUSINESS"));
+//        courseModelArrayList.add(new CourseModel("CSIS 3175", "INTRODUCTION TO MOBILE APPLICATION DEVELOPMENT"));
+//        courseModelArrayList.add(new CourseModel("CSIS 1275", "INTRODUCTION TO PROGRAMMING II"));
+//        courseModelArrayList.add(new CourseModel("CSIS 1280", "MULTIMEDIA WEB DEVELOPMENT"));
+
+//        fetching the courses from firebase firestore
+
 
         // initializing our adapter class.
-        adapter = new CourseAdapter(courseModelArrayList, listener, CoursesFragment.this );
+//        adapter = new CourseAdapter(courseModelArrayList, listener, CoursesFragment.this );
 
         // adding layout manager to our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -118,14 +135,62 @@ public class CoursesFragment extends Fragment {
     }
 
     private void setCourseOnClickListener() {
-        listener = new CourseAdapter.CourseClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Intent intent = new Intent(getContext(), CoursePage.class);
-                intent.putExtra("courseCode", courseModelArrayList.get(position).getCourseCode());
-                intent.putExtra("courseName", courseModelArrayList.get(position).getCourseName());
-                startActivity(intent);
-            }
-        };
+//        listener = new CourseAdapter.CourseClickListener() {
+//            @Override
+//            public void onClick(View v, int position) {
+//                Intent intent = new Intent(getContext(), CoursePage.class);
+//                intent.putExtra("courseCode", courseModelArrayList.get(position).getCourseCode());
+//                intent.putExtra("courseName", courseModelArrayList.get(position).getCourseName());
+//                startActivity(intent);
+//            }
+//        };
+    }
+
+    private void getList(){
+        db.collection("ChatRoom")
+                .get()
+                .addOnCompleteListener(task->{
+                        if(task.isSuccessful() && !task.getResult().isEmpty()){
+
+                            List<CourseModel> courses = new ArrayList<>();
+
+                            for(QueryDocumentSnapshot queryDocumentSnapshot:task.getResult()) {
+                                String dept = queryDocumentSnapshot.getString("department");
+                                String courseCode = queryDocumentSnapshot.getString("courseCode");
+                                String name = queryDocumentSnapshot.getString("name");
+
+                                CourseModel course = new CourseModel();
+                                course.setCourseDept(dept);
+                                course.setCourseCode(courseCode);
+                                course.setCourseName(name);
+                                courses.add(course);
+                            }
+                            if(courses.size() > 0){
+                                CourseAdapter courseAdapter = new CourseAdapter(courses, this);
+                                LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                                binding.courseRView.setHasFixedSize(true);
+
+                                // setting layout manager
+                                // to our recycler view.
+                                binding.courseRView.setLayoutManager(manager);
+
+                                // setting adapter to
+                                // our recycler view.
+                                binding.courseRView.setAdapter(courseAdapter);
+                            }
+                        }
+                        else{
+                            Toast.makeText(CoursesFragment.this.getContext(), "No courses found",Toast.LENGTH_LONG).show();
+                        }
+                });
+    }
+
+    @Override
+    public void onCourseClicked(CourseModel course) {
+        Intent intent = new Intent(getContext(), CoursePage.class);
+        intent.putExtra("courseDept", course.getCourseDept());
+        intent.putExtra("courseCode", course.getCourseCode());
+        intent.putExtra("courseName", course.getCourseName());
+        startActivity(intent);
     }
 }

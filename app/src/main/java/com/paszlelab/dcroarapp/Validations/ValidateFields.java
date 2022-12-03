@@ -2,17 +2,12 @@ package com.paszlelab.dcroarapp.Validations;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
-import com.paszlelab.dcroarapp.R;
 
 import java.util.regex.Pattern;
 
-public class FieldsFragment {
+public class ValidateFields {
     //    required fields must be non-null
     public static boolean requiredField(EditText field, String sfield){
         boolean notEmpty = false;

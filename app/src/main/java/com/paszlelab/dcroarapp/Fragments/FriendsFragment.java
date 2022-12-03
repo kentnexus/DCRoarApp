@@ -169,7 +169,6 @@ public class FriendsFragment extends Fragment implements UserListener {
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
                             } else {
-                                Log.d("-",query);
                                 if(firstName.toLowerCase().contains(query.toLowerCase()) ||
                                         lastName.toLowerCase().contains(query.toLowerCase())){
 
