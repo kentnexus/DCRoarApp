@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">DC Roar App</string>
+    <string name="apptitle">DC Roar</string>
+    <string name="welcome">Connect better with other students in the campus.</string>
+    <string name="login">Let\'s get you started.</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Non-binary</item>
+    </string-array>
+    <string name="loginpolicy">By proceeding, you also agree to the Terms of Service and Privacy Policy</string>
+    <string name="signintext">Already have an account?</string>
+    <string name="signintext2"><b><u>Sign in</u></b></string>
+    <string name="checkemail">Please check you email (%1$s) for a link to create or sign in to your account.
+                            Check junk or spam folders if not in inbox.</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
