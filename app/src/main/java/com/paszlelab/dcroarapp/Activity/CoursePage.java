@@ -2,32 +2,40 @@ package com.paszlelab.dcroarapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.paszlelab.dcroarapp.R;
+import com.paszlelab.dcroarapp.databinding.ActivityCoursePageBinding;
+import com.paszlelab.dcroarapp.listeners.CourseListener;
+import com.paszlelab.dcroarapp.models.CourseChat;
+import com.paszlelab.dcroarapp.models.CourseModel;
+import com.paszlelab.dcroarapp.models.Student;
 
-public class CoursePage extends AppCompatActivity {
+public class CoursePage extends AppCompatActivity implements CourseListener {
+
+    ActivityCoursePageBinding binding;
+    CourseModel course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_page);
+        binding = ActivityCoursePageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        TextView cCode = findViewById(R.id.pageCourseName);
-        TextView cName = findViewById(R.id.pageCourseCode);
+        course = (CourseModel) getIntent().getSerializableExtra("course");
 
-        String crscode = "Course code not set";
-        String crsname = "Course name not set";
+        binding.joinBtn.setOnClickListener(v -> {
+            onCourseClicked(course);
+        });
+    }
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            crscode = extras.getString("courseCode");
-            crsname = extras.getString("courseName");
-        }
-
-        cCode.setText(crscode);
-        cName.setText(crsname);
-
+    @Override
+    public void onCourseClicked(CourseModel course) {
+        Intent intent = new Intent(CoursePage.this, CourseChatRoom.class);
+        intent.putExtra("course", course);
+        startActivity(intent);
     }
 }

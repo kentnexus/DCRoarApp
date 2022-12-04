@@ -26,6 +26,7 @@ import com.paszlelab.dcroarapp.Adapters.CourseAdapter;
 import com.paszlelab.dcroarapp.databinding.FragmentCoursesBinding;
 import com.paszlelab.dcroarapp.listeners.CourseListener;
 import com.paszlelab.dcroarapp.models.CourseModel;
+import com.paszlelab.dcroarapp.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class CoursesFragment extends Fragment implements CourseListener {
     }
 
     private void getCourses() {
-        db.collection("ChatRoom").get().addOnCompleteListener(task -> {
+        db.collection("courses").get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && !task.getResult().isEmpty()) {
 
                 List<CourseModel> courses = new ArrayList<>();
@@ -119,7 +120,7 @@ public class CoursesFragment extends Fragment implements CourseListener {
     }
 
     private void filteredCourses(String query) {
-        db.collection("ChatRoom").get().addOnCompleteListener(task -> {
+        db.collection("courses").get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && !task.getResult().isEmpty()) {
 
                 List<CourseModel> courses = new ArrayList<>();
@@ -158,10 +159,8 @@ public class CoursesFragment extends Fragment implements CourseListener {
 
     @Override
     public void onCourseClicked(CourseModel course) {
-        Intent intent = new Intent(getContext(), CoursePage.class);
-        intent.putExtra("courseDept", course.getCourseDept());
-        intent.putExtra("courseCode", course.getCourseCode());
-        intent.putExtra("courseName", course.getCourseName());
+        Intent intent = new Intent(getActivity().getApplicationContext(), CoursePage.class);
+        intent.putExtra("course", course);
         startActivity(intent);
     }
 }
