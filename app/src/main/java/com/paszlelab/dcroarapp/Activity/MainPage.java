@@ -1,6 +1,5 @@
 package com.paszlelab.dcroarapp.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,7 +13,7 @@ import com.paszlelab.dcroarapp.Fragments.ProfileFragment;
 import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.ActivityMainBinding;
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends BaseActivity {
 
     ActivityMainBinding binding;
 

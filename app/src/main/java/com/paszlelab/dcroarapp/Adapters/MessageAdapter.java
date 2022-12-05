@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.paszlelab.dcroarapp.Utilities.RetrieveImage;
 import com.paszlelab.dcroarapp.databinding.LeftItemLayoutBinding;
 import com.paszlelab.dcroarapp.databinding.RightItemLayoutBinding;
 import com.paszlelab.dcroarapp.models.Message;
@@ -22,8 +23,6 @@ import java.io.File;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    //TODO: add picture
 
     private final List<Message> messages;
     private final String senderId;
@@ -82,24 +81,26 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String imgSrc = message.getSender() + ".jpeg";
             Log.d("-", imgSrc);
 
-            try {
-                storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/" + imgSrc);
-
-                final File localFile = File.createTempFile(message.getSender(), "jpeg");
-                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        binding.userMessageImg.setImageBitmap(bitmap);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            } catch (Exception e) {
-            }
+//            TODO: this
+            RetrieveImage.getImg(binding.getRoot().getContext(), message.getSender(), binding.userMessageImg);
+//            try {
+//                storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/" + imgSrc);
+//
+//                final File localFile = File.createTempFile(message.getSender(), "jpeg");
+//                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                        binding.userMessageImg.setImageBitmap(bitmap);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
+//            } catch (Exception e) {
+//            }
         }
     }
 
@@ -116,25 +117,27 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.txtDateTime.setText(message.getDateTime());
 
             String imgSrc = message.getSender() + ".jpeg";
-            Log.d("-", imgSrc);
-            try {
-                storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/" + imgSrc);
-
-                final File localFile = File.createTempFile(message.getReceiver(), "jpeg");
-                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                        binding.userMessageImg.setImageBitmap(bitmap);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            } catch (Exception e) {
-            }
+//            Log.d("-", imgSrc);
+//            TODO:this
+            RetrieveImage.getImg(binding.getRoot().getContext(), message.getReceiver(), binding.userMessageImg);
+//            try {
+//                storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/" + imgSrc);
+//
+//                final File localFile = File.createTempFile(message.getReceiver(), "jpeg");
+//                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                        binding.userMessageImg.setImageBitmap(bitmap);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
+//            } catch (Exception e) {
+//            }
         }
     }
 }

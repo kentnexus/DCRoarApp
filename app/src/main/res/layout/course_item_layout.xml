@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#F4F4F4">
 
         <!-- text view for our course name -->
         <TextView
@@ -19,8 +20,9 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Course Code"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textColor="#99AC4D"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <!-- text view for our course description -->
         <TextView
@@ -28,8 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/idTVCourseCode"
+            android:background="#FFFFFF"
             android:padding="8dp"
             android:text="Course Name"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

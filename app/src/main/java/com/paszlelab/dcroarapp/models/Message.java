@@ -5,7 +5,7 @@ import java.util.Date;
 public class Message {
     private String sender, receiver, message, dateTime, img;
     private Date date;
-    private String conversionId, conversionName, conversionMessage, conversionImage, conversionDate;
+    private String conversationId, conversationName, conversationMessage, conversationImage, conversationDate;
 
     public Message() {
     }
@@ -50,44 +50,44 @@ public class Message {
         this.date = date;
     }
 
-    public String getConversionId() {
-        return conversionId;
+    public String getConversationId() {
+        return conversationId;
     }
 
-    public void setConversionId(String conversionId) {
-        this.conversionId = conversionId;
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
     }
 
-    public String getConversionName() {
-        return conversionName;
+    public String getConversationName() {
+        return conversationName;
     }
 
-    public void setConversionName(String conversionName) {
-        this.conversionName = conversionName;
+    public void setConversationName(String conversationName) {
+        this.conversationName = conversationName;
     }
 
-    public String getConversionMessage() {
-        return conversionMessage;
+    public String getConversationMessage() {
+        return conversationMessage;
     }
 
-    public void setConversionMessage(String conversionMessage) {
-        this.conversionMessage = conversionMessage;
+    public void setConversationMessage(String conversationMessage) {
+        this.conversationMessage = conversationMessage;
     }
 
-    public String getConversionImage() {
-        return conversionImage;
+    public String getConversationImage() {
+        return conversationImage;
     }
 
-    public void setConversionImage(String conversionImage) {
-        this.conversionImage = conversionImage;
+    public void setConversationImage(String conversationImage) {
+        this.conversationImage = conversationImage;
     }
 
-    public String getConversionDate() {
-        return conversionDate;
+    public String getConversationDate() {
+        return conversationDate;
     }
 
-    public void setConversionDate(String conversionDate) {
-        this.conversionDate = conversionDate;
+    public void setConversationDate(String conversationDate) {
+        this.conversationDate = conversationDate;
     }
 
     public String getImg() {

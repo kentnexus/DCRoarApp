@@ -35,9 +35,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="65dp"
                     android:layout_marginTop="17dp"
-                    android:text="Tyrone Kent"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
+                    android:text="Name"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtEmailAddress"
@@ -46,33 +47,34 @@
                     android:layout_below="@id/txtFriendName"
                     android:layout_alignStart="@+id/txtFriendName"
                     android:layout_marginTop="3dp"
-                    android:textSize="13dp"
+                    android:textSize="14dp"
                     android:textStyle="bold"
-                    android:text="Test"
-                    android:textColor="@color/gray"/>
+                    android:text="test@student.douglascollege.ca"
+                    android:textColor="@color/lime"/>
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imgContact"-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:src="@drawable/ic_info"-->
-<!--                    android:layout_alignTop="@id/txtFriendName"/>-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imgContact"-->
+                <!--                    android:layout_width="20dp"-->
+                <!--                    android:layout_height="20dp"-->
+                <!--                    android:layout_alignParentEnd="true"-->
+                <!--                    android:layout_centerInParent="true"-->
+                <!--                    android:layout_marginEnd="10dp"-->
+                <!--                    android:src="@drawable/ic_info"-->
+                <!--                    android:layout_alignTop="@id/txtFriendName"/>-->
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgUserProfile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_alignTop="@id/container"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="33dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:elevation="10dp"
-            android:src="@drawable/profile"/>
+            android:src="@drawable/profile" />
     </RelativeLayout>
 </layout>

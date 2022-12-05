@@ -90,14 +90,11 @@ public class CoursesFragment extends Fragment implements CourseListener {
                 List<CourseModel> courses = new ArrayList<>();
 
                 for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                    String dept = queryDocumentSnapshot.getString("department");
-                    String courseCode = queryDocumentSnapshot.getString("courseCode");
-                    String name = queryDocumentSnapshot.getString("name");
-
                     CourseModel course = new CourseModel();
-                    course.setCourseDept(dept);
-                    course.setCourseCode(courseCode);
-                    course.setCourseName(name);
+                    course.setCourseDept(queryDocumentSnapshot.getString("department"));
+                    course.setCourseCode(queryDocumentSnapshot.getString("courseCode"));
+                    course.setCourseName(queryDocumentSnapshot.getString("name"));
+                    course.setCourseId(queryDocumentSnapshot.getId());
                     courses.add(course);
                 }
                 if (courses.size() > 0) {
@@ -130,11 +127,14 @@ public class CoursesFragment extends Fragment implements CourseListener {
                     String courseCode = queryDocumentSnapshot.getString("courseCode");
                     String name = queryDocumentSnapshot.getString("name");
 
-                    if (dept.contains(query) || courseCode.contains(query) || name.contains(query)) {
+                    if (dept.toLowerCase().contains(query) ||
+                            courseCode.contains(query) ||
+                            name.toLowerCase().contains(query)) {
                         CourseModel course = new CourseModel();
                         course.setCourseDept(dept);
                         course.setCourseCode(courseCode);
                         course.setCourseName(name);
+                        course.setCourseId(queryDocumentSnapshot.getId());
                         courses.add(course);
                     }
                 }

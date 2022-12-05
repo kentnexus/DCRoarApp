@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +22,12 @@ import com.paszlelab.dcroarapp.listeners.ConversationListener;
 import com.paszlelab.dcroarapp.models.Message;
 import com.paszlelab.dcroarapp.models.Student;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatsFragment extends Fragment implements ConversationListener {
 
@@ -91,20 +93,18 @@ public class ChatsFragment extends Fragment implements ConversationListener {
                     message.setSender(senderId);
                     message.setReceiver(receiverId);
                     if (auth.getCurrentUser().getUid().equals(senderId)) {
-                        message.setConversionName(documentChange.getDocument().getString("receiverName"));
-                        message.setConversionId(documentChange.getDocument().getString("receiverId"));
-                        message.setConversionImage(documentChange.getDocument().getString("receiverId")+".jpeg");
+                        message.setConversationName(documentChange.getDocument().getString("receiverName"));
+                        message.setConversationId(documentChange.getDocument().getString("receiverId"));
                     } else {
-                        message.setConversionName(documentChange.getDocument().getString("senderName"));
-                        message.setConversionId(documentChange.getDocument().getString("senderId"));
-                        message.setConversionImage(documentChange.getDocument().getString("senderId")+".jpeg");
+                        message.setConversationName(documentChange.getDocument().getString("senderName"));
+                        message.setConversationId(documentChange.getDocument().getString("senderId"));
                     }
                     message.setMessage(documentChange.getDocument().getString("lastMessage"));
                     message.setDate(documentChange.getDocument().getDate("timestamp"));
                     conversations.add(message);
                 } else if (documentChange.getType() == DocumentChange.Type.MODIFIED) {
                     for (int i = 0; i < conversations.size(); i++) {
-                        Log.d("-","this works");
+//                        Log.d("-","this works");
                         String senderId = documentChange.getDocument().getString("senderId");
                         String receiverId = documentChange.getDocument().getString("receiverId");
                         if(conversations.get(i).getSender().equals(senderId) &&
@@ -122,6 +122,10 @@ public class ChatsFragment extends Fragment implements ConversationListener {
             binding.rViewRecentMessages.setVisibility(View.VISIBLE);
         }
     };
+
+    private String getReadableDateTime(Date date) {
+        return new SimpleDateFormat("MMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
 
     @Override
     public void onConversationClicked(Student student) {

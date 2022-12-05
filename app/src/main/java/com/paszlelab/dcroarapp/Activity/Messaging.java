@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,6 +24,9 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.paszlelab.dcroarapp.Adapters.MessageAdapter;
+import com.paszlelab.dcroarapp.R;
+import com.paszlelab.dcroarapp.Utilities.RetrieveImage;
+import com.paszlelab.dcroarapp.constants.Constants;
 import com.paszlelab.dcroarapp.databinding.ActivityMessagingBinding;
 import com.paszlelab.dcroarapp.models.Message;
 import com.paszlelab.dcroarapp.models.Student;
@@ -35,17 +39,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
-public class Messaging extends AppCompatActivity {
+public class Messaging extends BaseActivity {
 
     private ActivityMessagingBinding binding;
-    private Student receiver;
+    private Student receiver, user;
     private List<Message> messages;
     private MessageAdapter messageAdapter;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private String conversationId = null;
     private StorageReference storageReference;
+    private Boolean isReceiverAvailable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +62,15 @@ public class Messaging extends AppCompatActivity {
         setListeners();
         loadReceiverDetails();
         init();
+        loadUser();
         listenMessages();
     }
 
     private void init() {
         messages = new ArrayList<>();
         auth = FirebaseAuth.getInstance();
-        messageAdapter = new MessageAdapter(
-                messages, auth.getCurrentUser().getUid()
-        );
+        messageAdapter = new MessageAdapter(messages, auth.getUid());
+        user = new Student();
         binding.rViewMessages.setAdapter(messageAdapter);
         db = FirebaseFirestore.getInstance();
     }
@@ -84,9 +90,9 @@ public class Messaging extends AppCompatActivity {
                 Log.d("-", "no id");
                 HashMap<String, Object> conversation = new HashMap<>();
                 conversation.put("senderId", auth.getCurrentUser().getUid());
-                conversation.put("senderName", auth.getCurrentUser().getEmail());
+                conversation.put("senderName", user.getFirstName() + " " + user.getLastName());
                 conversation.put("receiverId", receiver.getId());
-                conversation.put("receiverName", receiver.getEmailAddress());
+                conversation.put("receiverName", receiver.getFirstName() + " " + receiver.getLastName());
                 conversation.put("lastMessage", binding.editTextMessage.getText().toString());
                 conversation.put("timestamp", new Date());
                 addConversation(conversation);
@@ -95,17 +101,15 @@ public class Messaging extends AppCompatActivity {
         }
     }
 
-    //TODO: add picture
-
     private void listenMessages() {
         db.collection("message")
-                .whereEqualTo("senderId", auth.getCurrentUser().getUid().toString())
+                .whereEqualTo("senderId", auth.getUid().toString())
                 .whereEqualTo("receiverId", receiver.getId())
                 .addSnapshotListener(eventListener);
 
         db.collection("message")
                 .whereEqualTo("senderId", receiver.getId())
-                .whereEqualTo("receiverId", auth.getCurrentUser().getUid().toString())
+                .whereEqualTo("receiverId", auth.getUid().toString())
                 .addSnapshotListener(eventListener);
     }
 
@@ -143,29 +147,48 @@ public class Messaging extends AppCompatActivity {
 
     private void loadReceiverDetails() {
         receiver = (Student) getIntent().getSerializableExtra("student");
-//        binding.toolbar.txtMessageSender.setText(receiver.getFirstName() + " " + receiver.getLastName());
-        binding.toolbar.txtMessageSender.setText(receiver.getEmailAddress());
-        String imgSrc = receiver.getId()+".jpeg";
+        binding.toolbar.txtMessageSender.setText(receiver.getFullname());
+//        binding.toolbar.txtMessageSender.setText(receiver.getEmailAddress());
+//        String imgSrc = receiver.getId() + ".jpeg";
+//        TODO: this
 
-        try {
-            storageReference = FirebaseStorage.getInstance()
-                    .getReference().child("profileImages/" + imgSrc);
+        RetrieveImage.getImg(this, receiver.getId(), binding.toolbar.profileImage);
 
-            final File localFile = File.createTempFile(receiver.getId(),"jpeg");
-            storageReference.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                            binding.toolbar.profileImage.setImageBitmap(bitmap);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+//        try {
+//            storageReference = FirebaseStorage.getInstance()
+//                    .getReference().child("profileImages/" + imgSrc);
+//
+//            final File localFile = File.createTempFile(receiver.getId(),"jpeg");
+//            storageReference.getFile(localFile)
+//                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                            binding.toolbar.profileImage.setImageBitmap(bitmap);
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//
+//                        }
+//                    });
+//        } catch(Exception e){}
+    }
 
-                        }
-                    });
-        } catch(Exception e){}
+    private void loadUser() {
+//        Log.d("user", auth.getUid());
+        db.collection("Student")
+                .document(auth.getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        user.setFirstName(documentSnapshot.getString("firstName"));
+                        user.setLastName(documentSnapshot.getString("lastName"));
+                        user.setFullname(user.getFirstName() + " " + user.getLastName());
+                    }
+                });
     }
 
     private void setListeners() {
@@ -178,30 +201,19 @@ public class Messaging extends AppCompatActivity {
     }
 
     private void addConversation(HashMap<String, Object> conversation) {
-        db.collection("RecentConvo")
-                .add(conversation)
-                .addOnSuccessListener(documentReference -> conversationId = documentReference.getId());
+        db.collection("RecentConvo").add(conversation).addOnSuccessListener(documentReference -> conversationId = documentReference.getId());
     }
 
     private void updateConversation(String message) {
-        DocumentReference documentReference =
-                db.collection("RecentConvo").document(conversationId);
-        documentReference.update(
-                "lastMessage", message,
-                "timestamp", new Date()
-        );
+        DocumentReference documentReference = db.collection("RecentConvo").document(conversationId);
+        documentReference.update("lastMessage", message,
+                "timestamp", new Date());
     }
 
     private void checkForConversation() {
         if (messages.size() != 0) {
-            checkForConversationRemotely(
-                    auth.getCurrentUser().getUid(),
-                    receiver.getId()
-            );
-            checkForConversationRemotely(
-                    receiver.getId(),
-                    auth.getCurrentUser().getUid()
-            );
+            checkForConversationRemotely(auth.getCurrentUser().getUid(), receiver.getId());
+            checkForConversationRemotely(receiver.getId(), auth.getCurrentUser().getUid());
         }
     }
 
@@ -220,4 +232,35 @@ public class Messaging extends AppCompatActivity {
 //            Log.d("-", conversationId);
         }
     };
+
+    private void listenAvailabilityOfReceiver() {
+        db.collection("Student")
+                .document(receiver.getId())
+                .addSnapshotListener(Messaging.this, (value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
+                    if (value != null) {
+                        try {
+                            if (value.getLong(Constants.KEY_AVAILABILITY) != null) {
+                                int availability = Objects.requireNonNull(
+                                        value.getLong(Constants.KEY_AVAILABILITY)
+                                ).intValue();
+                                isReceiverAvailable = availability == 1;
+                            }
+                        } catch (Exception e){}
+                    }
+                    if (isReceiverAvailable) {
+                        binding.txtAvailable.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.txtAvailable.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listenAvailabilityOfReceiver();
+    }
 }

@@ -26,16 +26,19 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="7dp"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:gravity="center">
 
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="wrap_content"
+            android:ems="4"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1.6"
             android:background="@drawable/edittext_border"
             android:hint="Write message..."
+            android:inputType="text|textMultiLine|textCapSentences"
             android:padding="8dp"
             android:textSize="14sp"
             tools:ignore="TouchTargetSizeCheck" />

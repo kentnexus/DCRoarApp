@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CourseModel implements Serializable {
     // variables for our course
     // code and name
-    private String courseDept, courseCode, courseName, senderId, message, timestamp;
+    private String courseDept, courseCode, courseName, senderId, message, timestamp, courseId;
 
     public CourseModel() {
     }
@@ -56,5 +56,13 @@ public class CourseModel implements Serializable {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 }

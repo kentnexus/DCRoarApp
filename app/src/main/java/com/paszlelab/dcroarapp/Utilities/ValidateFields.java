@@ -1,4 +1,4 @@
-package com.paszlelab.dcroarapp.Validations;
+package com.paszlelab.dcroarapp.Utilities;
 
 import android.content.Context;
 import android.text.TextUtils;

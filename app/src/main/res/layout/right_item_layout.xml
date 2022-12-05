@@ -16,13 +16,13 @@
         android:padding="5dp"
         android:text="Hi, how are u?"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMessageImg"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignBottom="@id/txtMessage"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="3dp"
@@ -34,8 +34,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtMessage"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="34dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="43dp"
         android:text="7:PM"
-        android:textSize="8sp" />
+        android:textSize="10sp" />
 
 </RelativeLayout>

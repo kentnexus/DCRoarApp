@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.paszlelab.dcroarapp.Utilities.RetrieveImage;
 import com.paszlelab.dcroarapp.databinding.FriendItemLayoutBinding;
 import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
@@ -65,25 +66,28 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 //            binding.imgUserProfile.setImageBitmap(getUserImage());
             String imgSrc = student.getImg();
 
-                        try {
-                storageReference = FirebaseStorage.getInstance()
-                        .getReference().child("profileImages/" + imgSrc);
+//            TODO: image
+            RetrieveImage.getImg(binding.getRoot().getContext(), student.getId(), binding.imgUserProfile);
 
-                final File localFile = File.createTempFile(student.getId(),"jpeg");
-                storageReference.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                binding.imgUserProfile.setImageBitmap(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-            } catch(Exception e){}
+//                        try {
+//                storageReference = FirebaseStorage.getInstance()
+//                        .getReference().child("profileImages/" + imgSrc);
+//
+//                final File localFile = File.createTempFile(student.getId(),"jpeg");
+//                storageReference.getFile(localFile)
+//                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                binding.imgUserProfile.setImageBitmap(bitmap);
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//
+//                            }
+//                        });
+//            } catch(Exception e){}
 
             binding.getRoot().setOnClickListener(v -> userListener.onUserClicked(student));
         }

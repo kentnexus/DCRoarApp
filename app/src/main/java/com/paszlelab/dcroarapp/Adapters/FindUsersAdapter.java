@@ -16,6 +16,7 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.paszlelab.dcroarapp.Utilities.RetrieveImage;
 import com.paszlelab.dcroarapp.databinding.FriendItemLayoutBinding;
 import com.paszlelab.dcroarapp.listeners.UserListener;
 import com.paszlelab.dcroarapp.models.Student;
@@ -68,25 +69,29 @@ public class FindUsersAdapter extends RecyclerView.Adapter<FindUsersAdapter.User
 
             String imgSrc = student.getImg();
 
-            try {
-                storageReference = FirebaseStorage.getInstance()
-                        .getReference().child("profileImages/" + imgSrc);
 
-                final File localFile = File.createTempFile(student.getId(),"jpeg");
-                storageReference.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                binding.imgUserProfile.setImageBitmap(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
+//            TODO:this
 
-                            }
-                        });
-            } catch(Exception e){}
+            RetrieveImage.getImg(binding.getRoot().getContext(), student.getId(), binding.imgUserProfile);
+//            try {
+//                storageReference = FirebaseStorage.getInstance()
+//                        .getReference().child("profileImages/" + imgSrc);
+//
+//                final File localFile = File.createTempFile(student.getId(),"jpeg");
+//                storageReference.getFile(localFile)
+//                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                binding.imgUserProfile.setImageBitmap(bitmap);
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//
+//                            }
+//                        });
+//            } catch(Exception e){}
 
             binding.getRoot().setOnClickListener(v -> {
                 userListener.onUserClicked(student);

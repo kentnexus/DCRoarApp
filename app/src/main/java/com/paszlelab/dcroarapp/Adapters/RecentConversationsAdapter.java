@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.paszlelab.dcroarapp.Utilities.RetrieveImage;
 import com.paszlelab.dcroarapp.databinding.MessageItemLayoutBinding;
 import com.paszlelab.dcroarapp.listeners.ConversationListener;
 import com.paszlelab.dcroarapp.models.Message;
@@ -67,42 +68,47 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
 
         void setData(Message message){
 //TODO:add picture
-            binding.txtName.setText(message.getConversionName());
+//            Log.d("name", message.getConversationName());
+            binding.txtName.setText(message.getConversationName());
             binding.txtLastMessage.setText(message.getMessage());
             binding.txtDate.setText(getReadableDateTime(message.getDate()));
 
-            String imgSrc = message.getConversionImage();
+//            String imgSrc = message.getConversationImage();
 
-            try {
-                storageReference = FirebaseStorage.getInstance()
-                        .getReference().child("profileImages/" + imgSrc);
+//            TODO:this
 
-                final File localFile = File.createTempFile(message.getConversionImage(),"jpeg");
-                storageReference.getFile(localFile)
-                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                                binding.imgContactUserInfo.setImageBitmap(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
+            RetrieveImage.getImg(binding.getRoot().getContext(), message.getConversationId(), binding.imgContactUserInfo);
 
-                            }
-                        });
-            } catch(Exception e){}
+//            try {
+//                storageReference = FirebaseStorage.getInstance()
+//                        .getReference().child("profileImages/" + imgSrc);
+//
+//                final File localFile = File.createTempFile(message.getConversationImage(),"jpeg");
+//                storageReference.getFile(localFile)
+//                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+//                                binding.imgContactUserInfo.setImageBitmap(bitmap);
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//
+//                            }
+//                        });
+//            } catch(Exception e){}
 
             binding.getRoot().setOnClickListener(v->{
                 Student student = new Student();
-                student.setId(message.getConversionId());
-                student.setEmailAddress(message.getConversionName());
+                student.setId(message.getConversationId());
+                student.setFullname(message.getConversationName());
                 conversationListener.onConversationClicked(student);
             });
         }
     }
 
     private String getReadableDateTime(Date date){
-        return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("MM/dd/yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
 }

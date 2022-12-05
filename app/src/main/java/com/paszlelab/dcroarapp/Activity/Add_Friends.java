@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Add_Friends extends AppCompatActivity implements UserListener {
+public class Add_Friends extends BaseActivity implements UserListener {
 
     private ActivityAddFriendsBinding binding;
     private FirebaseAuth auth;
@@ -92,6 +92,7 @@ public class Add_Friends extends AppCompatActivity implements UserListener {
                             student.setGender(gender);
                             student.setBirthday(dob);
                             student.setId(userId);
+                            student.setFullname(student.getFirstName()+" "+student.getLastName());
                             students.add(student);
                             Collections.sort(students, Student.firstNameComparator);
                         }
@@ -150,7 +151,7 @@ public class Add_Friends extends AppCompatActivity implements UserListener {
                             if (currentUserId.equals(queryDocumentSnapshot.getId())) {
                                 continue;
                             } else {
-                                Log.d("-",query);
+//                                Log.d("-",query);
                                 if(firstName.toLowerCase().contains(query.toLowerCase()) ||
                                         lastName.toLowerCase().contains(query.toLowerCase())){
 
@@ -162,6 +163,7 @@ public class Add_Friends extends AppCompatActivity implements UserListener {
                                     student.setGender(gender);
                                     student.setBirthday(dob);
                                     student.setId(userId);
+                                    student.setFullname(student.getFirstName()+" "+student.getLastName());
                                     students.add(student);
                                 }
                             }

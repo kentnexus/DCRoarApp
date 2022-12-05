@@ -61,7 +61,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
         void setCourseData(CourseModel courseModelArrayList) {
             binding.idTVCourseCode.setText(courseModelArrayList.getCourseDept() + " " + courseModelArrayList.getCourseCode());
-            Log.d("-", courseModelArrayList.getCourseCode());
+//            Log.d("-", courseModelArrayList.getCourseCode());
             binding.idTVCourseName.setText(courseModelArrayList.getCourseName());
 
             binding.getRoot().setOnClickListener(v->{

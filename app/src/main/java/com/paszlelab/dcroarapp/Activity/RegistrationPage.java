@@ -1,8 +1,8 @@
 package com.paszlelab.dcroarapp.Activity;
 
-import static com.paszlelab.dcroarapp.Validations.ValidateFields.getGender;
-import static com.paszlelab.dcroarapp.Validations.ValidateFields.requiredField;
-import static com.paszlelab.dcroarapp.Validations.ValidateFields.validEmail;
+import static com.paszlelab.dcroarapp.Utilities.ValidateFields.getGender;
+import static com.paszlelab.dcroarapp.Utilities.ValidateFields.requiredField;
+import static com.paszlelab.dcroarapp.Utilities.ValidateFields.validEmail;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

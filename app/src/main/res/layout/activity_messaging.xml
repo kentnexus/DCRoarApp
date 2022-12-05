@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".Activity.Messaging">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.Messaging">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/message_toolbar" />
+
+    <TextView
+        android:id="@+id/txtAvailable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:gravity="center"
+        android:background="#1FC502"
+        android:textStyle="bold"
+        android:text="Online"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:padding="2dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rViewMessages"
@@ -26,19 +40,22 @@ tools:context=".Activity.Messaging">
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:layout_marginBottom="7dp"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:gravity="center">
 
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="wrap_content"
+            android:ems="4"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1.6"
             android:background="@drawable/edittext_border"
             android:hint="Write message..."
             android:padding="8dp"
             android:textSize="14sp"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck"
+            android:inputType="text|textMultiLine|textCapSentences"/>
 
         <ImageView
             android:id="@+id/sendBtn"

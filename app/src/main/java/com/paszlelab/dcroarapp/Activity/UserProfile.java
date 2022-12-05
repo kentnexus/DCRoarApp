@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends BaseActivity {
 
     ActivityUserProfileBinding binding;
 //    Button btnSend;

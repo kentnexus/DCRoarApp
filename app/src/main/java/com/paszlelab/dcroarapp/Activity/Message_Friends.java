@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Message_Friends extends AppCompatActivity implements UserListener {
+public class Message_Friends extends BaseActivity implements UserListener {
 
     private ActivityMessageFriendsBinding binding;
     private FirebaseAuth auth;
@@ -89,6 +89,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                             student.setEmailAddress(email);
                             student.setId(queryDocumentSnapshot.getId());
                             student.setImg(img);
+                            student.setFullname(student.getFirstName()+" "+student.getLastName());
                             students.add(student);
                             Collections.sort(students, Student.firstNameComparator);
                         }
@@ -154,6 +155,7 @@ public class Message_Friends extends AppCompatActivity implements UserListener {
                                     student.setLastName(lastName);
                                     student.setEmailAddress(email);
                                     student.setImg(img);
+                                    student.setFullname(student.getFirstName()+" "+student.getLastName());
                                     students.add(student);
                                 }
                             }

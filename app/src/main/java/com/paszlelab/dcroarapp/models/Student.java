@@ -12,6 +12,8 @@ public class Student implements Serializable {
     private String phoneNumber;
     private String id;
     private String img;
+    private String fullname;
+    private int availability;
 
     public String getId() {
         return id;
@@ -79,6 +81,22 @@ public class Student implements Serializable {
 
     public Student(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public int isAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(int availability) {
+        this.availability = availability;
     }
 
     public Student() {
