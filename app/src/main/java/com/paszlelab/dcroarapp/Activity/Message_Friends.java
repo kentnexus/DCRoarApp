@@ -155,8 +155,10 @@ public class Message_Friends extends BaseActivity implements UserListener {
                                     student.setLastName(lastName);
                                     student.setEmailAddress(email);
                                     student.setImg(img);
+                                    student.setId(queryDocumentSnapshot.getId());
                                     student.setFullname(student.getFirstName()+" "+student.getLastName());
                                     students.add(student);
+                                    Collections.sort(students, Student.firstNameComparator);
                                 }
                             }
                         }

@@ -73,10 +73,10 @@ public class ChatsFragment extends Fragment implements ConversationListener {
 
     private void listenConversations(){
         db.collection("RecentConvo")
-                .whereEqualTo("senderId", auth.getCurrentUser().getUid())
+                .whereEqualTo("senderId", auth.getUid())
                 .addSnapshotListener(eventListener);
         db.collection("RecentConvo")
-                .whereEqualTo("receiverId", auth.getCurrentUser().getUid())
+                .whereEqualTo("receiverId", auth.getUid())
                 .addSnapshotListener(eventListener);
     }
 

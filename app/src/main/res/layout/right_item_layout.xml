@@ -22,7 +22,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userMessageImg"
         android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_height="31dp"
         android:layout_alignBottom="@id/txtMessage"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="3dp"
@@ -35,7 +35,7 @@
         android:layout_below="@id/txtMessage"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
-        android:layout_marginEnd="43dp"
+        android:layout_marginEnd="40dp"
         android:text="7:PM"
         android:textSize="10sp" />
 

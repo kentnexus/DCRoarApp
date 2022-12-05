@@ -1,7 +1,5 @@
 package com.paszlelab.dcroarapp.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,12 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
@@ -42,7 +41,8 @@ public class CourseChatRoom extends BaseActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private StorageReference storageReference;
-    private Student student;
+    private Student user;
+    private String conversationId = null;
 
 
     @Override
@@ -64,7 +64,7 @@ public class CourseChatRoom extends BaseActivity {
         binding.toolbar.profileImage.setImageBitmap(headerIcon);
         binding.toolbar.txtMessageSender.setText(course.getCourseDept() + " " + course.getCourseCode());
         messages = new ArrayList<>();
-        student = new Student();
+        user = new Student();
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         courseChatAdapter = new CourseChatAdapter(messages, auth.getUid(), course.getCourseId());
@@ -77,12 +77,25 @@ public class CourseChatRoom extends BaseActivity {
             message.put("courseDept", course.getCourseDept());
             message.put("courseCode", course.getCourseCode());
             message.put("senderId", auth.getUid());
-            message.put("senderName", student.getFullname());
+            message.put("senderName", user.getFullname());
             message.put("message", binding.editTextMessage.getText().toString());
             message.put("timestamp", new Date());
             message.put("courseId", course.getCourseId());
             db.collection("chatroom").add(message);
-
+//            if (conversationId != null) {
+//                Log.d("-", conversationId + " id");
+//                updateConversation(binding.editTextMessage.getText().toString());
+//            } else {
+//                Log.d("-", "no id");
+//                HashMap<String, Object> conversation = new HashMap<>();
+//                conversation.put("senderId", auth.getUid());
+//                conversation.put("senderName", user.getFirstName() + " " + user.getLastName());
+//                conversation.put("receiverId", course.getCourseId());
+//                conversation.put("receiverName", course.getCourseDept()+" "+course.getCourseCode());
+//                conversation.put("lastMessage", binding.editTextMessage.getText().toString());
+//                conversation.put("timestamp", new Date());
+//                addConversation(conversation);
+//            }
             binding.editTextMessage.setText(null);
         }
     }
@@ -125,6 +138,10 @@ public class CourseChatRoom extends BaseActivity {
             }
             binding.rViewMessages.setVisibility(View.VISIBLE);
         }
+
+//        if (conversationId == null) {
+//            checkForConversation();
+//        }
 //        binding.progressBar.setVisibility(View.GONE);
     };
 
@@ -150,10 +167,44 @@ public class CourseChatRoom extends BaseActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        student.setFirstName(documentSnapshot.getString("firstName"));
-                        student.setLastName(documentSnapshot.getString("lastName"));
-                        student.setFullname(student.getFirstName() + " " + student.getLastName());
+                        user.setFirstName(documentSnapshot.getString("firstName"));
+                        user.setLastName(documentSnapshot.getString("lastName"));
+                        user.setFullname(user.getFirstName() + " " + user.getLastName());
                     }
                 });
     }
+
+//    private void addConversation(HashMap<String, Object> conversation) {
+//        db.collection("RecentCourse").add(conversation)
+//                .addOnSuccessListener(documentReference ->
+//                        conversationId = documentReference.getId());
+//    }
+//
+//    private void updateConversation(String message) {
+//        DocumentReference documentReference = db.collection("RecentCourse").document(conversationId);
+//        documentReference.update("lastMessage", message,
+//                "timestamp", new Date());
+//    }
+//
+//    private void checkForConversation() {
+//        if (messages.size() != 0) {
+//            checkForConversationRemotely(auth.getCurrentUser().getUid(), course.getCourseId());
+//        }
+//    }
+//
+//    private void checkForConversationRemotely(String senderId, String receiverId) {
+//        db.collection("RecentCourse")
+//                .whereEqualTo("senderId", senderId)
+//                .whereEqualTo("courseId", course.getCourseId())
+//                .get()
+//                .addOnCompleteListener(conversationOnCompleteListener);
+//    }
+//
+//    private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
+//        if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+//            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+//            conversationId = documentSnapshot.getId();
+////            Log.d("-", conversationId);
+//        }
+//    };
 }

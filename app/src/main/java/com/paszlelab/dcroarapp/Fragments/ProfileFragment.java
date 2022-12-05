@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -309,11 +310,12 @@ public class ProfileFragment extends Fragment {
         builder.setMessage("").setTitle("Profile Picture");
 
         //Set message & Perform action on button click
-        builder.setMessage("Please choose your picture").setCancelable(false).setPositiveButton("Take Photo", new DialogInterface.OnClickListener() {
+        builder.setMessage("Please choose your picture").setCancelable(true).setPositiveButton("Take Photo", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getActivity().getApplicationContext(), "Camera is opened", Toast.LENGTH_SHORT).show();
-                addProfilePic.setOnClickListener(v -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA));
+                addProfilePic.setOnClickListener(v ->
+                        cameraPermissionLauncher.launch(Manifest.permission.CAMERA));
                 takePhoto();
             }
         }).setNegativeButton("Choose Photo", new DialogInterface.OnClickListener() {
@@ -334,8 +336,8 @@ public class ProfileFragment extends Fragment {
     // =======================     5.1    ==========================================================
     // Take picture from Camera
     private void actsOnUserResponse() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 takePhoto();
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                 new AlertDialog.Builder(getActivity()).setTitle("Grant Permission").setMessage("Allow this app to take pictures").setPositiveButton("Give permission", new DialogInterface.OnClickListener() {
@@ -352,6 +354,8 @@ public class ProfileFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "You denied to take pictures", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            chooseProfilePicture();
         }
     }
 

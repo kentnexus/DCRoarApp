@@ -119,11 +119,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String imgSrc = message.getSender() + ".jpeg";
 //            Log.d("-", imgSrc);
 //            TODO:this
-            RetrieveImage.getImg(binding.getRoot().getContext(), message.getReceiver(), binding.userMessageImg);
+            RetrieveImage.getImg(binding.getRoot().getContext(), message.getSender(), binding.userMessageImg);
 //            try {
 //                storageReference = FirebaseStorage.getInstance().getReference().child("profileImages/" + imgSrc);
 //
-//                final File localFile = File.createTempFile(message.getReceiver(), "jpeg");
+//                final File localFile = File.createTempFile(message.getSender(), "jpeg");
 //                storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
 //                    @Override
 //                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
