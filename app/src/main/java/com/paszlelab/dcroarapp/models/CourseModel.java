@@ -5,21 +5,10 @@ import java.io.Serializable;
 public class CourseModel implements Serializable {
     // variables for our course
     // code and name
-    private String courseDept;
-    private String courseCode;
-    private String courseName;
-
-    // creating constructor for our variables.
-    public CourseModel(String courseDept, String courseCode, String courseName) {
-        this.courseDept = courseDept;
-        this.courseCode = courseCode;
-        this.courseName = courseName;
-    }
+    private String courseDept, courseCode, courseName, senderId, message, timestamp;
 
     public CourseModel() {
     }
-
-    // creating getter and setter methods.
 
     public String getCourseDept() {
         return courseDept;
@@ -43,5 +32,29 @@ public class CourseModel implements Serializable {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

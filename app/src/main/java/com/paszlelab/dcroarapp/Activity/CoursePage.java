@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
-import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.ActivityCoursePageBinding;
 import com.paszlelab.dcroarapp.listeners.CourseListener;
-import com.paszlelab.dcroarapp.models.CourseChat;
 import com.paszlelab.dcroarapp.models.CourseModel;
-import com.paszlelab.dcroarapp.models.Student;
 
 public class CoursePage extends AppCompatActivity implements CourseListener {
 

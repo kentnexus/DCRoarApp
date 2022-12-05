@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
+import com.paszlelab.dcroarapp.Adapters.CourseChatAdapter;
 import com.paszlelab.dcroarapp.Adapters.MessageAdapter;
 import com.paszlelab.dcroarapp.R;
 import com.paszlelab.dcroarapp.databinding.ActivityCourseChatRoomBinding;
@@ -27,7 +28,7 @@ public class CourseChatRoom extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private String conversationId = null;
+    CourseChatAdapter courseChatAdapter;
     private StorageReference storageReference;
 
 
@@ -43,8 +44,8 @@ public class CourseChatRoom extends AppCompatActivity {
         init();
     }
 
-    public void init(){
-
+    public void init() {
+        courseChatAdapter = new CourseChatAdapter();
     }
 
     private void sendMessage() {
@@ -61,7 +62,7 @@ public class CourseChatRoom extends AppCompatActivity {
         }
     }
 
-    public void loadCourse(){
+    public void loadCourse() {
         course = (CourseModel) getIntent().getSerializableExtra("course");
     }
 }
