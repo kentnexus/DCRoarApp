@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/navtop"
-        android:layout_width="412dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:background="#C7E065"
         android:orientation="horizontal"
@@ -59,7 +59,7 @@
 
     <Button
         android:id="@+id/btnCloseEmail"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="45dp"
         android:layout_marginTop="96dp"

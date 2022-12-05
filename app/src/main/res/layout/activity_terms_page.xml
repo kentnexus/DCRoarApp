@@ -6,40 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".Activity.TermsPage">
 
-<LinearLayout
-android:id="@+id/navtop"
-android:layout_width="412dp"
-android:layout_height="48dp"
-android:background="#C7E065"
-android:orientation="horizontal"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintHorizontal_bias="0.0"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/navtop"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="#C7E065"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnBack"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="goBack"
-        android:text="back"
-        android:textColor="@color/black"
-        android:textSize="10sp" />
+        <Button
+            android:id="@+id/btnBack"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="goBack"
+            android:text="back"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/pageTitle"
-        android:layout_width="260dp"
-        android:layout_height="37dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Terms of Service"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Terms of Service"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnplaceholder"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
 
     <WebView
         android:id="@+id/webview"

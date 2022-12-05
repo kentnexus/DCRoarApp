@@ -25,7 +25,8 @@ public class ValidateFields {
     public static boolean validEmail(Context context, EditText etEmail){
 
         String email = etEmail.getText().toString();
-        String pattern = ".*@student.douglascollege.ca";
+//        String pattern = ".*@student.douglascollege.ca";
+        String pattern = ".*.douglascollege.ca";
         boolean match = Pattern.matches(pattern, email);
 
         return match;
