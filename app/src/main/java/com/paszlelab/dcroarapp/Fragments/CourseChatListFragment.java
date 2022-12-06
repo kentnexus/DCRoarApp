@@ -61,7 +61,6 @@ public class CourseChatListFragment extends Fragment  implements CourseListener 
 
     private void listenConversations(){
         db.collection("RecentCourse")
-                .whereEqualTo("senderId", auth.getUid())
                 .addSnapshotListener(eventListener);
     }
 
