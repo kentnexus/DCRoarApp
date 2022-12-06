@@ -136,6 +136,7 @@ public class Messaging extends BaseActivity {
             } else {
                 messageAdapter.notifyItemRangeInserted(messages.size(), messages.size());
                 binding.rViewMessages.smoothScrollToPosition(messages.size() - 1);
+                Log.d(":", messages.size()+"");
             }
             binding.rViewMessages.setVisibility(View.VISIBLE);
         }
@@ -201,7 +202,9 @@ public class Messaging extends BaseActivity {
     }
 
     private void addConversation(HashMap<String, Object> conversation) {
-        db.collection("RecentConvo").add(conversation).addOnSuccessListener(documentReference -> conversationId = documentReference.getId());
+        db.collection("RecentConvo")
+                .add(conversation)
+                .addOnSuccessListener(documentReference -> conversationId = documentReference.getId());
     }
 
     private void updateConversation(String message) {

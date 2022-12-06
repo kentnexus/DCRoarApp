@@ -31,7 +31,7 @@ public class CoursePage extends BaseActivity implements CourseListener {
     private CourseModel course;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
-    private boolean hasJoined;
+    private boolean[] hasJoined = new boolean[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +44,14 @@ public class CoursePage extends BaseActivity implements CourseListener {
         binding.pageCourseName.setText(course.getCourseName());
         binding.pageCourseCode.setText(course.getCourseDept() + " " + course.getCourseCode());
 
-
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        loadUser();
 
         binding.joinBtn.setOnClickListener(v -> {
             onCourseClicked(course);
         });
+
     }
 
     private void loadCourse() {
@@ -65,4 +66,26 @@ public class CoursePage extends BaseActivity implements CourseListener {
         CoursePage.this.finish();
     }
 
+    private void loadUser() {
+//        db.collection("chatroom")
+//                .whereEqualTo("courseId", course.getCourseId())
+//                .whereEqualTo("senderId", auth.getUid())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            hasJoined[0] = task.getResult().isEmpty();
+//                            if (hasJoined[0]) {
+//                                binding.joinBtn.setOnClickListener(v -> {
+//                                    onCourseClicked(course);
+//                                });
+//                            } else {
+//                                binding.joinBtn.setEnabled(false);
+//                                binding.joinBtn.setText("Joined");
+//                            }
+//                        }
+//                    }
+//                });
+    }
 }

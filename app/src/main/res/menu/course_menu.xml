@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Group Chat"
-        android:id="@+id/gchats"/>
-    <item android:title="Courses"
-        android:id="@+id/gcourses"/>
+    <item
+        android:id="@+id/gchats"
+        android:title="Group Chat" />
+    <item
+        android:id="@+id/gcourses"
+        android:title="Courses" />
 </menu>

@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.CoursesListFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/rFrameLayoutCourse"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/navBartop"
-        app:layout_constraintTop_toBottomOf="parent">
-
-    </FrameLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navBartop"
-            android:layout_width="match_parent"
+        <SearchView
+            android:id="@+id/searchId"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/course_menu" />
+            app:queryHint="Search Course" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/course_rView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchId" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

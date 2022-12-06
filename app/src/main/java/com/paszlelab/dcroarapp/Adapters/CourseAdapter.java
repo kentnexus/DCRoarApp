@@ -29,7 +29,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         this.courseListener = courseListener;
     }
 
-
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,7 +40,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         holder.setCourseData(courseModelArrayList.get(position));
     }
-
 
     @Override
     public int getItemCount() {
@@ -58,7 +56,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             binding = courseLayoutBinding;
         }
 
-
         void setCourseData(CourseModel courseModelArrayList) {
             binding.idTVCourseCode.setText(courseModelArrayList.getCourseDept() + " " + courseModelArrayList.getCourseCode());
 //            Log.d("-", courseModelArrayList.getCourseCode());
@@ -68,16 +65,5 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 courseListener.onCourseClicked(courseModelArrayList);
             });
         }
-
-//        @Override
-//        public void onClick(View view) {
-//            listener.onClick(view, getAdapterPosition());
-//            listener.onClick();
-//        }
     }
-
-
-//    public interface CourseClickListener {
-//        void onClick(View v, int position);
-//    }
 }

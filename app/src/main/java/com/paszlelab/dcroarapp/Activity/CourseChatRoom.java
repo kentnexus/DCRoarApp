@@ -40,7 +40,6 @@ public class CourseChatRoom extends BaseActivity {
     private CourseChatAdapter courseChatAdapter;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private StorageReference storageReference;
     private Student user;
     private String conversationId = null;
 
@@ -82,20 +81,20 @@ public class CourseChatRoom extends BaseActivity {
             message.put("timestamp", new Date());
             message.put("courseId", course.getCourseId());
             db.collection("chatroom").add(message);
-//            if (conversationId != null) {
-//                Log.d("-", conversationId + " id");
-//                updateConversation(binding.editTextMessage.getText().toString());
-//            } else {
-//                Log.d("-", "no id");
-//                HashMap<String, Object> conversation = new HashMap<>();
-//                conversation.put("senderId", auth.getUid());
-//                conversation.put("senderName", user.getFirstName() + " " + user.getLastName());
-//                conversation.put("receiverId", course.getCourseId());
-//                conversation.put("receiverName", course.getCourseDept()+" "+course.getCourseCode());
-//                conversation.put("lastMessage", binding.editTextMessage.getText().toString());
-//                conversation.put("timestamp", new Date());
-//                addConversation(conversation);
-//            }
+            if (conversationId != null) {
+                Log.d("-", conversationId + " id");
+                updateConversation(binding.editTextMessage.getText().toString());
+            } else {
+                Log.d("-", "no id");
+                HashMap<String, Object> conversation = new HashMap<>();
+                conversation.put("senderId", auth.getUid());
+                conversation.put("senderName", user.getFirstName() + " " + user.getLastName());
+                conversation.put("receiverId", course.getCourseId());
+                conversation.put("receiverName", course.getCourseDept()+" "+course.getCourseCode());
+                conversation.put("lastMessage", binding.editTextMessage.getText().toString());
+                conversation.put("timestamp", new Date());
+                addConversation(conversation);
+            }
             binding.editTextMessage.setText(null);
         }
     }
@@ -134,14 +133,14 @@ public class CourseChatRoom extends BaseActivity {
                 courseChatAdapter.notifyDataSetChanged();
             } else {
                 courseChatAdapter.notifyItemRangeInserted(messages.size(), messages.size());
-                binding.rViewMessages.smoothScrollToPosition(messages.size() - 1);
+//                binding.rViewMessages.smoothScrollToPosition(messages.size() - 1);
             }
             binding.rViewMessages.setVisibility(View.VISIBLE);
         }
 
-//        if (conversationId == null) {
-//            checkForConversation();
-//        }
+        if (conversationId == null) {
+            checkForConversation();
+        }
 //        binding.progressBar.setVisibility(View.GONE);
     };
 
@@ -174,37 +173,36 @@ public class CourseChatRoom extends BaseActivity {
                 });
     }
 
-//    private void addConversation(HashMap<String, Object> conversation) {
-//        db.collection("RecentCourse").add(conversation)
-//                .addOnSuccessListener(documentReference ->
-//                        conversationId = documentReference.getId());
-//    }
-//
-//    private void updateConversation(String message) {
-//        DocumentReference documentReference = db.collection("RecentCourse").document(conversationId);
-//        documentReference.update("lastMessage", message,
-//                "timestamp", new Date());
-//    }
-//
-//    private void checkForConversation() {
-//        if (messages.size() != 0) {
-//            checkForConversationRemotely(auth.getCurrentUser().getUid(), course.getCourseId());
-//        }
-//    }
-//
-//    private void checkForConversationRemotely(String senderId, String receiverId) {
-//        db.collection("RecentCourse")
-//                .whereEqualTo("senderId", senderId)
-//                .whereEqualTo("courseId", course.getCourseId())
-//                .get()
-//                .addOnCompleteListener(conversationOnCompleteListener);
-//    }
-//
-//    private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
-//        if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-//            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-//            conversationId = documentSnapshot.getId();
-////            Log.d("-", conversationId);
-//        }
-//    };
+    private void addConversation(HashMap<String, Object> conversation) {
+        db.collection("RecentCourse").add(conversation)
+                .addOnSuccessListener(documentReference ->
+                        conversationId = documentReference.getId());
+    }
+
+    private void updateConversation(String message) {
+        DocumentReference documentReference = db.collection("RecentCourse").document(conversationId);
+        documentReference.update("lastMessage", message,
+                "timestamp", new Date());
+    }
+
+    private void checkForConversation() {
+        if (messages.size() != 0) {
+            checkForConversationRemotely(course.getCourseId());
+        }
+    }
+
+    private void checkForConversationRemotely(String courseId) {
+        db.collection("RecentCourse")
+                .whereEqualTo("receiverId", course.getCourseId())
+                .get()
+                .addOnCompleteListener(conversationOnCompleteListener);
+    }
+
+    private final OnCompleteListener<QuerySnapshot> conversationOnCompleteListener = task -> {
+        if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+            conversationId = documentSnapshot.getId();
+            Log.d("-", conversationId);
+        }
+    };
 }

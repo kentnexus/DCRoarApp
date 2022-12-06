@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/msgData"
         android:layout_below="@+id/toolbar"
+        android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:stackFromEnd="true" />
 
