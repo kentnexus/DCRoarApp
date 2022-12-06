@@ -48,9 +48,9 @@ public class CoursePage extends BaseActivity implements CourseListener {
         auth = FirebaseAuth.getInstance();
         loadUser();
 
-        binding.joinBtn.setOnClickListener(v -> {
-            onCourseClicked(course);
-        });
+//        binding.joinBtn.setOnClickListener(v -> {
+//            onCourseClicked(course);
+//        });
 
     }
 
@@ -67,25 +67,25 @@ public class CoursePage extends BaseActivity implements CourseListener {
     }
 
     private void loadUser() {
-//        db.collection("chatroom")
-//                .whereEqualTo("courseId", course.getCourseId())
-//                .whereEqualTo("senderId", auth.getUid())
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            hasJoined[0] = task.getResult().isEmpty();
-//                            if (hasJoined[0]) {
-//                                binding.joinBtn.setOnClickListener(v -> {
-//                                    onCourseClicked(course);
-//                                });
-//                            } else {
-//                                binding.joinBtn.setEnabled(false);
-//                                binding.joinBtn.setText("Joined");
-//                            }
-//                        }
-//                    }
-//                });
+        db.collection("chatroom")
+                .whereEqualTo("courseId", course.getCourseId())
+                .whereEqualTo("senderId", auth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            hasJoined[0] = task.getResult().isEmpty();
+                            if (hasJoined[0]) {
+                                binding.joinBtn.setOnClickListener(v -> {
+                                    onCourseClicked(course);
+                                });
+                            } else {
+                                binding.joinBtn.setEnabled(false);
+                                binding.joinBtn.setText("Joined");
+                            }
+                        }
+                    }
+                });
     }
 }
