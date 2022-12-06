@@ -85,6 +85,7 @@ public class Messaging extends BaseActivity {
             db.collection("message").add(message);
             if (conversationId != null) {
                 Log.d("-", conversationId + " id");
+                updateConversation(binding.editTextMessage.getText().toString());
             } else {
                 Log.d("-", "no id");
                 HashMap<String, Object> conversation = new HashMap<>();
@@ -233,7 +234,7 @@ public class Messaging extends BaseActivity {
     };
 
     private void listenAvailabilityOfReceiver() {
-        try{
+
         db.collection("Student")
                 .document(receiver.getId())
                 .addSnapshotListener(Messaging.this, (value, error) -> {
@@ -248,14 +249,15 @@ public class Messaging extends BaseActivity {
                                 ).intValue();
                                 isReceiverAvailable = availability == 1;
                             }
-                        } catch (Exception e){}
+                        } catch (Exception e) {
+                        }
                     }
                     if (isReceiverAvailable) {
                         binding.txtAvailable.setVisibility(View.VISIBLE);
                     } else {
                         binding.txtAvailable.setVisibility(View.GONE);
                     }
-                });} catch (Exception e){}
+                });
     }
 
     @Override
